@@ -43,7 +43,7 @@ const SideBar = memo(({ className, appConfig, collapsed }) => {
           >
             <img
               src={Icon}
-              alt="ERP REPORT"
+              alt="Hà Sơn Hải Vân"
               style={{ height: 40, width: 45, borderRadius: 40, marginTop: 10 }}
             />
           </p>

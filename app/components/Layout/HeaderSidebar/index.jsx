@@ -17,17 +17,89 @@ const HeaderSidebar = memo(({ className }) => {
     <Menu>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-          1st menu item
+          Hà Nội - Lào Cai
         </a>
       </Menu.Item>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-          2nd menu item
+        Hà Nội - Bắc Hà
         </a>
       </Menu.Item>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-          3rd menu item
+          Hà Nội - SaPa
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+          Lào Cai - Bắc Ninh
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+          Sapa - Bắc Ninh
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+  const menu1 = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Điểm đến
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+  const menu2 = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Xe liên tỉnh
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Hàng hóa
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+  const menu3 = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Vế HASONHAIVAN
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          An toàn & chất lượng
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+         Phát triển bền vững
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Đánh giá của khách hàng
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+         Đối tác
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Tin tức
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+         Tuyển dụng
         </a>
       </Menu.Item>
     </Menu>
@@ -44,22 +116,22 @@ const HeaderSidebar = memo(({ className }) => {
           </Col>
           <Col xs={20} sm={20} md={20} lg={20} xl={20}>
             <Row justify="end" align="middle">
-              <Dropdown overlay={menu}>
+              <Dropdown overlay={menu} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   Tuyến đường <DownOutlined />
                 </a>
               </Dropdown>
-              <Dropdown overlay={menu}>
+              <Dropdown overlay={menu1} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   Khám phá <DownOutlined />
                 </a>
               </Dropdown>
-              <Dropdown overlay={menu}>
+              <Dropdown overlay={menu2} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   Dịch vụ <DownOutlined />
                 </a>
               </Dropdown>
-              <Dropdown overlay={menu}>
+              <Dropdown overlay={menu3} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                   Chúng tôi <DownOutlined />
                 </a>

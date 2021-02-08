@@ -28,7 +28,16 @@ import icon_phone2 from "images/icon_phone2.png";
 import icon_phone3 from "images/icon_phone3.png";
 import icon_clock from "images/icon_clock.png";
 
-const List = memo(({ className, setParams, data, params }) => {
+const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace }) => {
+  _.map(dataPlace, (itemDatatPlace, index) => {
+    itemDatatPlace.title = itemDatatPlace.name;
+    itemDatatPlace.value = itemDatatPlace.id;
+    _.map(itemDatatPlace.places, (item, key) => {
+      item.title = item.name;
+      item.value = item.id;
+    });
+    itemDatatPlace.children = itemDatatPlace.places;
+  });
   const settings = {
     dots: false,
     infinite: true,
@@ -115,16 +124,7 @@ const List = memo(({ className, setParams, data, params }) => {
                           size="large"
                           className="search_height"
                           placeholder="Chọn điểm xuất phát"
-                          treeData={[
-                            {
-                              title: "Light",
-                              value: "light",
-                              children: [
-                                { title: "Bamboo", value: "bamboo" },
-                                { title: "VietJet Air", value: "vietjet" },
-                              ],
-                            },
-                          ]}
+                          treeData={dataPlace}
                         />
                       </Col>
                       <Col sm={6} lg={6} xs={6} md={6}>
@@ -289,7 +289,7 @@ const List = memo(({ className, setParams, data, params }) => {
                             }}
                           />
                           <div
-                            class="d-flex flex-column"
+                            className="d-flex flex-column"
                             style={{ padding: "12px 16px" }}
                           >
                             <h2
@@ -301,9 +301,9 @@ const List = memo(({ className, setParams, data, params }) => {
                             >
                               {item.tuy_ten}
                             </h2>
-                            <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                              <div class="flex-fill">{item.tuy_gia_nho_nhat}</div>
-                              <div class="d-flex flex-row justify-content-center align-items-center">
+                            <div className="d-flex flex-row" style={{ fontSize: "16px" }}>
+                              <div className="flex-fill">{item.tuy_gia_nho_nhat}</div>
+                              <div className="d-flex flex-row justify-content-center align-items-center">
                                 <img
                                   src={icon_clock}
                                   alt="Thời gian"
@@ -383,9 +383,6 @@ export default styled(List)`
   .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 56px !important;
   }
-  span.ant-select-selection-placeholder {
-    padding-top: 10px !important;
-  }
   .h3_title {
     font-size: 24px;
     font-weight: bold;
@@ -399,10 +396,9 @@ export default styled(List)`
     text-align: center;
     margin-top: 4px;
   }
-//   .ant-select-single.ant-select-lg:not(.ant-select-customize-input)
-//     .ant-select-selector {
-//     padding: 10px 11px;
-//   }
+  .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector::after, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 55px;
+  }
   .cardview {
     box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
     background-color: #fff;

@@ -24,11 +24,34 @@ const Home = memo(({}) => {
   });
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
+  const [dataPlace, setDataPlace] = useState([]);
   const [params, setParams] = useState({
     page: 1,
     limit: 100,
   });
 
+  const boweloadData = useCallback(async () => {
+    const [error, setError] = useState(null);
+    useEffect(() => {
+      fetch("https://apiweb.hasonhaivan.com/api/places")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setDataPlace(result);
+          },
+          (error) => {
+            setError(error);
+          }
+        )
+    }, []); 
+
+  if (error) {
+    return Ui.showError(error.message);
+  } else {
+    console.log(dataPlace);
+  }
+  }, [params]);
+  boweloadData();
   const boweload = useCallback(async () => {
     let newParams = {
       // page: params.page,
@@ -62,6 +85,8 @@ const Home = memo(({}) => {
             data={data}
             setData={setData}
             params={params}
+            dataPlace={dataPlace}
+            setDataPlace={setDataPlace}
             setParams={setParams}
         />
     </>
