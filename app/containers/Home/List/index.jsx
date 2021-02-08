@@ -267,75 +267,77 @@ const List = memo(({ className, setParams, data, params }) => {
             <div style={{ marginBottom: "48px" }}>
               <Row style={{ margin: "-8px -8px 8px -8px" }}>
                   {_.map(data, (item, index) => {
-                      console.log("item", item);
-                      <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                      <a
-                        className="cardview d-flex flex-column"
-                        href={`/xe-khach/${item.slug}`}
-                        style={{
-                          borderRadius: "4px",
-                          textDecoration: "none",
-                          color: "rgb(88, 89, 91)",
-                          position: "relative",
-                        }}
-                      >
-                        <img
-                          src={`https://cms.hasonhaivan.com/${item.tuy_image}`}
+                      return (
+                        <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
+                        <a
+                          className="cardview d-flex flex-column"
+                          href={`/xe-khach/${item.slug}`}
                           style={{
-                            width: "100%",
-                            height: "auto",
                             borderRadius: "4px",
-                            objectFit: "cover",
+                            textDecoration: "none",
+                            color: "rgb(88, 89, 91)",
+                            position: "relative",
                           }}
-                        />
-                        <div
-                          class="d-flex flex-column"
-                          style={{ padding: "12px 16px" }}
                         >
-                          <h2
+                          <img
+                            src={`https://cms.hasonhaivan.com/${item.tuy_image}`}
                             style={{
-                              fontSize: "20px",
-                              fontWeight: "bold",
-                              marginBottom: "0px",
+                              width: "100%",
+                              height: "auto",
+                              borderRadius: "4px",
+                              objectFit: "cover",
                             }}
+                          />
+                          <div
+                            class="d-flex flex-column"
+                            style={{ padding: "12px 16px" }}
                           >
-                            {item.tuy_ten}
-                          </h2>
-                          <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                            <div class="flex-fill">{item.tuy_gia_nho_nhat}</div>
-                            <div class="d-flex flex-row justify-content-center align-items-center">
-                              <img
-                                src={icon_clock}
-                                alt="Thời gian"
-                                style={{ width: "16px", height: "16px" }}
-                              />
-                              <div> {item.tuy_thoi_gian_chay} </div>
+                            <h2
+                              style={{
+                                fontSize: "20px",
+                                fontWeight: "bold",
+                                marginBottom: "0px",
+                              }}
+                            >
+                              {item.tuy_ten}
+                            </h2>
+                            <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
+                              <div class="flex-fill">{item.tuy_gia_nho_nhat}</div>
+                              <div class="d-flex flex-row justify-content-center align-items-center">
+                                <img
+                                  src={icon_clock}
+                                  alt="Thời gian"
+                                  style={{ width: "16px", height: "16px" }}
+                                />
+                                <div> {item.tuy_thoi_gian_chay} </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div
-                          style={{
-                            position: "absolute",
-                            border: "2px solid rgb(255, 221, 43)",
-                            backgroundColor: "rgb(200, 0, 0)",
-                            borderRadius: "0px 40px 40px 0px",
-                            top: "8px",
-                            left: "-8px",
-                          }}
-                        >
                           <div
                             style={{
-                              fontWeight: "700",
-                              padding: "4px 12px",
-                              color: "rgb(255, 221, 43)",
-                              fontSize: "14px",
+                              position: "absolute",
+                              border: "2px solid rgb(255, 221, 43)",
+                              backgroundColor: "rgb(200, 0, 0)",
+                              borderRadius: "0px 40px 40px 0px",
+                              top: "8px",
+                              left: "-8px",
+                              display: `${item.tuy_moi == 1 ? "" : "none"}`
                             }}
                           >
-                            {item.tuy_moi == 1 ? "Mới khai trương" : ""}
+                            <div
+                              style={{
+                                fontWeight: "700",
+                                padding: "4px 12px",
+                                color: "rgb(255, 221, 43)",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Mới khai trương
+                            </div>
                           </div>
-                        </div>
-                      </a>
-                    </Col>
+                        </a>
+                      </Col>
+                      )
                   })}
                 </Row>
             </div>
