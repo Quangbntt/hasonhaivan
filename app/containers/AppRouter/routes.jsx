@@ -44,7 +44,7 @@ export const authorizedRoutes = [
     component: Profile,
   },
   {
-    path: "/",
+    path: "/hasonhaivan",
     exact: true,
     component: Home,
   },
