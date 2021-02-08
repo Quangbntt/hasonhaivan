@@ -34,10 +34,11 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
     itemDatatPlace.value = itemDatatPlace.id;
     _.map(itemDatatPlace.places, (item, key) => {
       item.title = item.name;
-      item.value = item.id;
+      item.value = item.name;
     });
     itemDatatPlace.children = itemDatatPlace.places;
   });
+  console.log(dataPlace);
   const settings = {
     dots: false,
     infinite: true,
