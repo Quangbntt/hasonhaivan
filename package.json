@@ -1,4 +1,5 @@
 {
+  "homepage": "https://quangbntt.github.io/hasonhaivan",
   "name": "erpreport",
   "version": "1.0.0",
   "description": "HAI VAN ERP REPORT",
@@ -9,6 +10,8 @@
   "author": "ERP REPORT TEAM",
   "license": "BUITU",
   "scripts": {
+    "predeploy": "npm run build:dev-vt",
+    "deploy": "gh-pages -d app-build",
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
