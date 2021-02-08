@@ -46,7 +46,8 @@ const Home = memo(({}) => {
     } else {
       setLoading(false);
       setTotalLength(_.get(result, "value.total"));
-      let arrNew = _.get(result, "value");
+      let data = _.get(result, "value");
+      setData(data);
     }
   }, [params]);
   useEffect(() => {

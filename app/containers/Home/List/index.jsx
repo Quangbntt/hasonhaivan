@@ -266,415 +266,78 @@ const List = memo(({ className, setParams, data, params }) => {
             </Col>
             <div style={{ marginBottom: "48px" }}>
               <Row style={{ margin: "-8px -8px 8px -8px" }}>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
+                  {_.map(data, (item, index) => {
+                      console.log("item", item);
+                      <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
+                      <a
+                        className="cardview d-flex flex-column"
+                        href={`/xe-khach/${item.slug}`}
                         style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
+                          borderRadius: "4px",
+                          textDecoration: "none",
+                          color: "rgb(88, 89, 91)",
+                          position: "relative",
                         }}
                       >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
+                        <img
+                          src={`https://cms.hasonhaivan.com/${item.tuy_image}`}
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            borderRadius: "4px",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <div
+                          class="d-flex flex-column"
+                          style={{ padding: "12px 16px" }}
+                        >
+                          <h2
+                            style={{
+                              fontSize: "20px",
+                              fontWeight: "bold",
+                              marginBottom: "0px",
+                            }}
+                          >
+                            {item.tuy_ten}
+                          </h2>
+                          <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
+                            <div class="flex-fill">{item.tuy_gia_nho_nhat}</div>
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                              <img
+                                src={icon_clock}
+                                alt="Thời gian"
+                                style={{ width: "16px", height: "16px" }}
+                              />
+                              <div> {item.tuy_thoi_gian_chay} </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
-                        }}
-                      >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
+                        <div
+                          style={{
+                            position: "absolute",
+                            border: "2px solid rgb(255, 221, 43)",
+                            backgroundColor: "rgb(200, 0, 0)",
+                            borderRadius: "0px 40px 40px 0px",
+                            top: "8px",
+                            left: "-8px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontWeight: "700",
+                              padding: "4px 12px",
+                              color: "rgb(255, 221, 43)",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {item.tuy_moi == 1 ? "Mới khai trương" : ""}
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
-                        }}
-                      >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
-                        }}
-                      >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
-                        }}
-                      >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                  <a
-                    className="cardview d-flex flex-column"
-                    href="/xe-khach/bac-ninh/lao-cai"
-                    style={{
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      color: "rgb(88, 89, 91)",
-                      position: "relative",
-                    }}
-                  >
-                    <img
-                      src="https://cms.hasonhaivan.com/images/20201215/cua_khau.jpg"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "4px",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <div
-                      class="d-flex flex-column"
-                      style={{ padding: "12px 16px" }}
-                    >
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          marginBottom: "0px",
-                        }}
-                      >
-                        Bắc Ninh - Lào Cai
-                      </h2>
-                      <div class="d-flex flex-row" style={{ fontSize: "16px" }}>
-                        <div class="flex-fill">Từ 230.000đ ₫</div>
-                        <div class="d-flex flex-row justify-content-center align-items-center">
-                          <img
-                            src={icon_clock}
-                            alt="Thời gian"
-                            style={{ width: "16px", height: "16px" }}
-                          />
-                          <div> 4h50</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: "absolute",
-                        border: "2px solid rgb(255, 221, 43)",
-                        backgroundColor: "rgb(200, 0, 0)",
-                        borderRadius: "0px 40px 40px 0px",
-                        top: "8px",
-                        left: "-8px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: "700",
-                          padding: "4px 12px",
-                          color: "rgb(255, 221, 43)",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Mới khai trương
-                      </div>
-                    </div>
-                  </a>
-                </Col>
-              </Row>
+                      </a>
+                    </Col>
+                  })}
+                </Row>
             </div>
           </Row>
         </div>
