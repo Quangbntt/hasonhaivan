@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, Component, useState } from "react";
+import React, { memo, useEffect, useMemo, Component, useState, useCallback } from "react";
 import {
   Table,
   Badge,
@@ -13,6 +13,7 @@ import {
   TreeSelect,
   DatePicker,
   Divider,
+  AutoComplete,
 } from "antd";
 import classNames from "classnames";
 import moment from "moment";
@@ -28,7 +29,7 @@ import icon_phone2 from "images/icon_phone2.png";
 import icon_phone3 from "images/icon_phone3.png";
 import icon_clock from "images/icon_clock.png";
 
-const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace }) => {
+const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace, inputPlace, setInputPlace }) => {
   _.map(dataPlace, (itemDatatPlace, index) => {
     itemDatatPlace.title = itemDatatPlace.name;
     itemDatatPlace.value = itemDatatPlace.id;
@@ -38,7 +39,53 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
     });
     itemDatatPlace.children = itemDatatPlace.places;
   });
-  console.log(dataPlace);
+
+  const mockVal = (str) => {
+    onChangeInput(str);
+      let arrInput = [];
+      _.map(inputPlace, (item, index) => {
+        arrInput.push(item.name);
+      });
+    return {
+      value: arrInput,
+    };
+  };
+    const [value, setValue] = useState('');
+    const [options, setOptions] = useState([]);
+  
+    const onSearch = (searchText) => {
+      setOptions(
+        !searchText ? [] : [mockVal(searchText)],
+      );
+      console.log('mockVal', mockVal);
+    };
+  
+    const onSelect = (data) => {
+      console.log('onSelect', data);
+    };
+  
+    const onChange = (data) => {
+      setValue(data);
+    };
+
+    
+  const onChangeInput = (e) => {
+    setParams((preState) => {
+      let nextState = { ...preState };
+      nextState.input = e;
+      return nextState;
+    }, [params]);
+  };
+  const getQuery = useCallback(
+    (value, name) => {
+      setParams((preState) => {
+        let nextState = { ...preState };
+        nextState[name] = value;
+        return nextState;
+      });
+    },
+    [params]
+  );
   const settings = {
     dots: false,
     infinite: true,
@@ -129,21 +176,17 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
                         />
                       </Col>
                       <Col sm={6} lg={6} xs={6} md={6}>
-                        <TreeSelect
-                          size="large"
-                          className="search_height"
+                        <AutoComplete
+                          options={options}
+                          onSelect={onSelect}
+                          onSearch={onSearch}
                           placeholder="Chọn điểm đến"
-                          treeData={[
-                            {
-                              title: "Light",
-                              value: "light",
-                              children: [
-                                { title: "Bamboo", value: "bamboo" },
-                                { title: "VietJet Air", value: "vietjet" },
-                              ],
-                            },
-                          ]}
                         />
+                        {/* <AutoComplete
+                          placeholder="Chọn điểm đến"
+                          style={{height: "55px"}}
+                          onChange={(e) => onChangeInput(e)}
+                        /> */}
                       </Col>
                       <Col sm={6} lg={6} xs={6} md={6}>
                         <DatePicker
@@ -380,6 +423,15 @@ export default styled(List)`
   }
   .ant-picker-large {
     padding: 14px;
+  }
+  span.ant-select-selection-placeholder {
+    margin-top; 12px!important;
+  }
+  .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 55px;
+  }
+  input#rc_select_1 {
+    height: 55px;
   }
   .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 56px !important;

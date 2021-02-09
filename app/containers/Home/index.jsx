@@ -11,6 +11,7 @@ import { Ui } from "utils/Ui";
 import ServiceBase from "utils/ServiceBase";
 import Pagination from "components/Paginate/index";
 import List from "./List";
+import Axios from "axios";
 
 let time = null;
 
@@ -25,33 +26,47 @@ const Home = memo(({}) => {
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
   const [dataPlace, setDataPlace] = useState([]);
+  const [inputPlace, setInputPlace] = useState([]);
   const [params, setParams] = useState({
+    input: undefined,
+    api_token: '6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v',
     page: 1,
     limit: 100,
   });
-
   const boweloadData = useCallback(async () => {
     const [error, setError] = useState(null);
+    const url = "https://apiweb.hasonhaivan.com/api/places";
     useEffect(() => {
-      fetch("https://apiweb.hasonhaivan.com/api/places")
-        .then(res => res.json())
-        .then(
-          (result) => {
-            setDataPlace(result);
-          },
-          (error) => {
-            setError(error);
-          }
-        )
-    }, []); 
-
+      Axios.get(url).then((repos) => {
+        const allRepos = repos.data;
+        setDataPlace(allRepos);
+      });
+    }, [params]);
   if (error) {
     return Ui.showError(error.message);
   } else {
-    console.log(dataPlace);
+    // console.log(dataPlace);
   }
-  }, [params]);
+  });
   boweloadData();
+
+  const boweloadPlace = useCallback(async () => {
+    const [error, setError] = useState(null);
+    const url = "https://place.havaz.vn/api/v1/places?input="+params.input+"&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+    useEffect(() => {
+      Axios.get(url).then((repos) => {
+        const allRepos = repos.data.data;
+        setInputPlace(allRepos);
+      });
+    }, [params]);
+  if (error) {
+    return Ui.showError(error.message);
+  } else {
+    // console.log(dataPlace);
+  }
+  });
+  boweloadPlace();
+
   const boweload = useCallback(async () => {
     let newParams = {
       // page: params.page,
@@ -80,6 +95,8 @@ const Home = memo(({}) => {
   return (
     <>
         <List 
+            inputPlace={inputPlace}
+            setInputPlace={setInputPlace}
             loading={loading}
             setLoading={setLoading}
             data={data}
