@@ -39,36 +39,37 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
     });
     itemDatatPlace.children = itemDatatPlace.places;
   });
-
+  const [arrInput, setArrInput] = useState([]);
   const mockVal = (str) => {
     onChangeInput(str);
-      let arrInput = [];
-      _.map(inputPlace, (item, index) => {
-        arrInput.push(item.name);
-      });
+    _.map(inputPlace, (item, index) => {
+      let arr = [];
+      arr.push(item.name);
+      setArrInput(arr);
+    });
     return {
       value: arrInput,
     };
   };
-    const [value, setValue] = useState('');
-    const [options, setOptions] = useState([]);
-  
-    const onSearch = (searchText) => {
-      setOptions(
-        !searchText ? [] : [mockVal(searchText)],
-      );
-      console.log('mockVal', mockVal);
-    };
-  
-    const onSelect = (data) => {
-      console.log('onSelect', data);
-    };
-  
-    const onChange = (data) => {
-      setValue(data);
-    };
+  const [value, setValue] = useState('');
+  const [options, setOptions] = useState([]);
 
-    
+  const onSearch = (searchText) => {
+    // console.log(mockVal(searchText));
+    setOptions(
+      !searchText ? [] : [mockVal(searchText)],
+    );
+  };
+
+  const onSelect = (data) => {
+    // console.log('onSelect', data);
+  };
+
+  const onChange = (data) => {
+    setValue(data);
+  };
+
+
   const onChangeInput = (e) => {
     setParams((preState) => {
       let nextState = { ...preState };
@@ -310,80 +311,80 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
             </Col>
             <div style={{ marginBottom: "48px" }}>
               <Row style={{ margin: "-8px -8px 8px -8px" }}>
-                  {_.map(data, (item, index) => {
-                      return (
-                        <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
-                        <a
-                          className="cardview d-flex flex-column"
-                          href={`/xe-khach/${item.slug}`}
+                {_.map(data, (item, index) => {
+                  return (
+                    <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
+                      <a
+                        className="cardview d-flex flex-column"
+                        href={`/xe-khach/${item.slug}`}
+                        style={{
+                          borderRadius: "4px",
+                          textDecoration: "none",
+                          color: "rgb(88, 89, 91)",
+                          position: "relative",
+                        }}
+                      >
+                        <img
+                          src={`https://cms.hasonhaivan.com/${item.tuy_image}`}
                           style={{
+                            width: "100%",
+                            height: "auto",
                             borderRadius: "4px",
-                            textDecoration: "none",
-                            color: "rgb(88, 89, 91)",
-                            position: "relative",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <div
+                          className="d-flex flex-column"
+                          style={{ padding: "12px 16px" }}
+                        >
+                          <h2
+                            style={{
+                              fontSize: "20px",
+                              fontWeight: "bold",
+                              marginBottom: "0px",
+                            }}
+                          >
+                            {item.tuy_ten}
+                          </h2>
+                          <div className="d-flex flex-row" style={{ fontSize: "16px" }}>
+                            <div className="flex-fill">{item.tuy_gia_nho_nhat}</div>
+                            <div className="d-flex flex-row justify-content-center align-items-center">
+                              <img
+                                src={icon_clock}
+                                alt="Thời gian"
+                                style={{ width: "16px", height: "16px" }}
+                              />
+                              <div> {item.tuy_thoi_gian_chay} </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            position: "absolute",
+                            border: "2px solid rgb(255, 221, 43)",
+                            backgroundColor: "rgb(200, 0, 0)",
+                            borderRadius: "0px 40px 40px 0px",
+                            top: "8px",
+                            left: "-8px",
+                            display: `${item.tuy_moi == 1 ? "" : "none"}`
                           }}
                         >
-                          <img
-                            src={`https://cms.hasonhaivan.com/${item.tuy_image}`}
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              borderRadius: "4px",
-                              objectFit: "cover",
-                            }}
-                          />
-                          <div
-                            className="d-flex flex-column"
-                            style={{ padding: "12px 16px" }}
-                          >
-                            <h2
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "bold",
-                                marginBottom: "0px",
-                              }}
-                            >
-                              {item.tuy_ten}
-                            </h2>
-                            <div className="d-flex flex-row" style={{ fontSize: "16px" }}>
-                              <div className="flex-fill">{item.tuy_gia_nho_nhat}</div>
-                              <div className="d-flex flex-row justify-content-center align-items-center">
-                                <img
-                                  src={icon_clock}
-                                  alt="Thời gian"
-                                  style={{ width: "16px", height: "16px" }}
-                                />
-                                <div> {item.tuy_thoi_gian_chay} </div>
-                              </div>
-                            </div>
-                          </div>
                           <div
                             style={{
-                              position: "absolute",
-                              border: "2px solid rgb(255, 221, 43)",
-                              backgroundColor: "rgb(200, 0, 0)",
-                              borderRadius: "0px 40px 40px 0px",
-                              top: "8px",
-                              left: "-8px",
-                              display: `${item.tuy_moi == 1 ? "" : "none"}`
+                              fontWeight: "700",
+                              padding: "4px 12px",
+                              color: "rgb(255, 221, 43)",
+                              fontSize: "14px",
                             }}
                           >
-                            <div
-                              style={{
-                                fontWeight: "700",
-                                padding: "4px 12px",
-                                color: "rgb(255, 221, 43)",
-                                fontSize: "14px",
-                              }}
-                            >
-                              Mới khai trương
+                            Mới khai trương
                             </div>
-                          </div>
-                        </a>
-                      </Col>
-                      )
-                  })}
-                </Row>
+                        </div>
+                      </a>
+                    </Col>
+                  )
+                })}
+              </Row>
             </div>
           </Row>
         </div>
