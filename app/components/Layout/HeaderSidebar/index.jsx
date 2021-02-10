@@ -16,27 +16,27 @@ const HeaderSidebar = memo(({ className }) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/tuyen-duong/ha-noi-lao-cai">
           Hà Nội - Lào Cai
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/tuyen-duong/ha-noi-bac-ha">
         Hà Nội - Bắc Hà
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/tuyen-duong/ha-noi-sa-pa">
           Hà Nội - SaPa
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/tuyen-duong/lao-cai-bac-ninh">
           Lào Cai - Bắc Ninh
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/tuyen-duong/sa-pa-bac-ninh">
           Sapa - Bắc Ninh
         </a>
       </Menu.Item>
@@ -45,7 +45,7 @@ const HeaderSidebar = memo(({ className }) => {
   const menu1 = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/diem-den">
           Điểm đến
         </a>
       </Menu.Item>
@@ -54,12 +54,12 @@ const HeaderSidebar = memo(({ className }) => {
   const menu2 = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/dich-vu/xe-lien-tinh/tien-ich-tren-xe">
           Xe liên tỉnh
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/dich-vu/hang-hoa/">
           Hàng hóa
         </a>
       </Menu.Item>
@@ -68,37 +68,37 @@ const HeaderSidebar = memo(({ className }) => {
   const menu3 = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/gioi-thieu">
           Vế HASONHAIVAN
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/an-toan-chat-luong">
           An toàn & chất lượng
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/phat-trien-ben-vung">
          Phát triển bền vững
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/danh-gia-cua-khach-hang">
           Đánh giá của khách hàng
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/doi-tac">
          Đối tác
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/bao-chi-tin-tuc">
           Tin tức
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a target="_blank" rel="noopener noreferrer" href="https://hasonhaivan.com/chung-toi/tuyen-dung">
          Tuyển dụng
         </a>
       </Menu.Item>
@@ -136,7 +136,7 @@ const HeaderSidebar = memo(({ className }) => {
                   Chúng tôi <DownOutlined />
                 </a>
               </Dropdown>
-              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              <a className="ant-dropdown-link" href="https://hasonhaivan.com/ho-tro">
                 Hỗ trợ
                 </a>
               <div style={{ paddingLeft: "4px", paddingRight: "4px" }} className="ant-col">

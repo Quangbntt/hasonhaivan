@@ -312,11 +312,13 @@ const List = memo(({ className, setParams, data, params, dataPlace, setDataPlace
             <div style={{ marginBottom: "48px" }}>
               <Row style={{ margin: "-8px -8px 8px -8px" }}>
                 {_.map(data, (item, index) => {
+                  var url = "https://hasonhaivan.com/";
                   return (
                     <Col xs={24} sm={24} md={12} lg={8} style={{ padding: "8px" }}>
                       <a
                         className="cardview d-flex flex-column"
-                        href={`/xe-khach/${item.slug}`}
+                        target="_blank"
+                        href={`${url}/xe-khach/${item.slug}`}
                         style={{
                           borderRadius: "4px",
                           textDecoration: "none",
