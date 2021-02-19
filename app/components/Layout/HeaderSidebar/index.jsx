@@ -11,6 +11,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button, Row, Col } from 'antd';
 import icon_nine_dot from "images/icon_nine_dot.png";
 import logo from "images/logo.png";
+
 const prefix = 'app.routing.';
 const HeaderSidebar = memo(({ className }) => {
   const menu = (
@@ -112,7 +113,7 @@ const HeaderSidebar = memo(({ className }) => {
         <Row className="row" style={{ flex: 1, maxWidth: "1200px" }} align="middle" >
           <Col xs={4} sm={4} md={4} lg={4} xl={4}>
             <a><img src={icon_nine_dot} style={{ width: "32px", height: "32px" }} /></a>
-            <a><img src={logo} style={{ width: "144px", height: "30px" }} /></a>
+            <a><img src={logo} style={{ width: "144px", height: "30px", marginLeft: "8px" }} /></a>
           </Col>
           <Col xs={20} sm={20} md={20} lg={20} xl={20}>
             <Row justify="end" align="middle">
@@ -178,5 +179,11 @@ export default memo(styled(HeaderSidebar)`
   }
   .ant-dropdown-link {
     padding-right: 20px;
+  }
+  .ant-row.ant-row-end.ant-row-middle:hover a {
+    color: #000!important;
+  }
+  .ant-row.ant-row-end.ant-row-middle a {
+    font-weight: 400;
   }
 `);

@@ -14,6 +14,7 @@ import List from "./List";
 import Axios from "axios";
 
 let time = null;
+let time1 = null;
 
 const Home = memo(({}) => {
   const [loading, setLoading] = useState(false);
@@ -34,64 +35,30 @@ const Home = memo(({}) => {
     limit: 100,
   });
   const boweloadData = useCallback(async () => {
-    const [error, setError] = useState(null);
+    // //Api lấy danh sách các tuyến
+    const urlHome = "https://cms.hasonhaivan.com/api/homeWayRoads";
+    Axios.get(urlHome).then((repos) => {
+      const response = repos.data;
+      setTotalLength(_.get(response, "value.total"));
+      setData(response);
+    });
+    // //api điểm đến
+    const urlPlace = "https://place.havaz.vn/api/v1/places?input="+params.input+"&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+    Axios.get(urlPlace).then((repos) => {
+      const result = repos.data.data;
+      setInputPlace(result);
+    });
+    //api điểm bắt đầu
     const url = "https://apiweb.hasonhaivan.com/api/places";
-    useEffect(() => {
       Axios.get(url).then((repos) => {
         const allRepos = repos.data;
         setDataPlace(allRepos);
       });
-    }, [params]);
-  if (error) {
-    return Ui.showError(error.message);
-  } else {
-    // console.log(dataPlace);
-  }
-  });
-  boweloadData();
-
-  const boweloadPlace = useCallback(async () => {
-    const [error, setError] = useState(null);
-    const url = "https://place.havaz.vn/api/v1/places?input="+params.input+"&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
-    useEffect(() => {
-      Axios.get(url).then((repos) => {
-        const allRepos = repos.data.data;
-        setInputPlace(allRepos);
-      });
-    }, [params]);
-  if (error) {
-    return Ui.showError(error.message);
-  } else {
-    // console.log(dataPlace);
-  }
-  });
-  boweloadPlace();
-
-  const boweload = useCallback(async () => {
-    let newParams = {
-      // page: params.page,
-      // limit: params.limit,
-    };
-    setLoading(true);
-    let result = await ServiceBase.requestJson({
-      url: "/homeWayRoads",
-      method: "GET",
-      data: newParams,
-    });
-    if (result.hasErrors) {
-      Ui.showErrors(result.errors);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      setTotalLength(_.get(result, "value.total"));
-      let data = _.get(result, "value");
-      setData(data);
-    }
-  }, [params]);
+  },[params]);
   useEffect(() => {
     clearTimeout(time);
-    time = setTimeout(boweload, 800);
-  }, [boweload]);
+    time = setTimeout(boweloadData, 800);
+  }, [boweloadData]);
   return (
     <>
         <List 
