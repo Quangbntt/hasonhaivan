@@ -72,17 +72,22 @@ const List = memo(
       };
     };
     const [value, setValue] = useState("");
-
+    //Function covert phút => giờ phút
+    function timeConvert(n) {
+      var num = n;
+      var hours = (num / 60);
+      var rhours = Math.floor(hours);
+      var minutes = (hours - rhours) * 60;
+      var rminutes = Math.round(minutes);
+      return rhours + "h" + rminutes;
+      }
+      
     const onSearch = (searchText) => {
       onChangeInput(searchText);
       setOptions(!searchText ? [] : [mockVal(searchText)]);
     };
-    const [state, setState] = useState({
-      value: undefined,
-    });
 
     const onSelect = (data) => {
-      console.log(data);
       // console.log('onSelect', data);
     };
 
@@ -452,7 +457,7 @@ const List = memo(
                                   alt="Thời gian"
                                   style={{ width: "16px", height: "16px" }}
                                 />
-                                <div> {item.tuy_thoi_gian_chay} </div>
+                                <div> {timeConvert(item.tuy_thoi_gian_chay)} </div>
                               </div>
                             </div>
                           </div>
