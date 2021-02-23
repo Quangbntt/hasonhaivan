@@ -25,6 +25,7 @@ const Home = memo(({}) => {
   });
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
+  const [dataSlider, setDataSlider] = useState([]);
   const [dataPlace, setDataPlace] = useState([]);
   const [inputPlace, setInputPlace] = useState([]);
   const [params, setParams] = useState({
@@ -34,32 +35,31 @@ const Home = memo(({}) => {
     limit: 100,
   });
   const boweloadData = useCallback(async () => {
+    setLoading(true);
     // //Api lấy danh sách các tuyến
     const urlHome = "https://cms.hasonhaivan.com/api/homeWayRoads";
     Axios.get(urlHome).then((repos) => {
       const response = repos.data;
       setTotalLength(_.get(response, "value.total"));
       setData(response);
+      setLoading(false);
     });
-    // //api điểm đến
-    // if (params.input === "") {
-    //   setInputPlace([]);
-    // } else {
-    //   const urlPlace =
-    //     "https://place.havaz.vn/api/v1/places?input=" +
-    //     params.input +
-    //     "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
-    //   Axios.get(urlPlace).then((repos) => {
-    //     const result = repos.data.data;
-    //     setInputPlace(result);
-    //   });
-    // }
+
+    //Api lấy ảnh cho slide
+    const urlSlider =
+      "https://cms.hasonhaivan.com/api/intercity-listing?wayroad_id=7";
+    Axios.get(urlSlider).then((repos) => {
+      const resSlider = repos.data.data;
+      setDataSlider(resSlider);
+      setLoading(false);
+    });
 
     //api điểm bắt đầu
     const url = "https://apiweb.hasonhaivan.com/api/places";
     Axios.get(url).then((repos) => {
       const allRepos = repos.data;
       setDataPlace(allRepos);
+      setLoading(false);
     });
   }, [params]);
   useEffect(() => {
@@ -68,18 +68,22 @@ const Home = memo(({}) => {
   }, [boweloadData]);
   return (
     <>
-      <List
-        // inputPlace={inputPlace}
-        // setInputPlace={setInputPlace}
-        loading={loading}
-        setLoading={setLoading}
-        data={data}
-        setData={setData}
-        params={params}
-        dataPlace={dataPlace}
-        setDataPlace={setDataPlace}
-        setParams={setParams}
-      />
+        {
+          dataSlider.images && (
+            <List
+              loading={loading}
+              setLoading={setLoading}
+              data={data}
+              setData={setData}
+              params={params}
+              dataPlace={dataPlace}
+              setDataPlace={setDataPlace}
+              setParams={setParams}
+              dataSlider={dataSlider}
+              setDataSlider={setDataSlider}
+          />
+          )
+        }
     </>
   );
 });

@@ -24,32 +24,27 @@ import {
 } from "antd";
 import classNames from "classnames";
 import moment from "moment";
-import _ from "lodash";
+import _, { isNull } from "lodash";
 import styled from "styled-components";
 import * as style from "components/Variables";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { RightOutlined } from '@ant-design/icons';
+import { RightOutlined } from "@ant-design/icons";
 import bannerhv from "images/bannerhv.jpg";
+import Axios from "axios";
 import icon_phone1 from "images/icon_phone1.png";
 import icon_phone2 from "images/icon_phone2.png";
 import icon_phone3 from "images/icon_phone3.png";
 import icon_clock from "images/icon_clock.png";
 
+let time = null;
 const { TreeNode } = TreeSelect;
 const { Option } = AutoComplete;
 const List = memo(
-  ({
-    className,
-    setParams,
-    data,
-    params,
-    dataPlace,
-    setDataPlace,
-    inputPlace,
-    setInputPlace,
-  }) => {
+  ({ className, setParams, data, params, dataPlace, setDataPlace }) => {
+    const [inputPlace, setInputPlace] = useState([]);
+
     _.map(dataPlace, (itemDatatPlace, index) => {
       itemDatatPlace.title = itemDatatPlace.name;
       itemDatatPlace.value = itemDatatPlace.id;
@@ -59,52 +54,53 @@ const List = memo(
       });
       itemDatatPlace.children = itemDatatPlace.places;
     });
-    const [arrInput, setArrInput] = useState([]);
-    console.log('inputPlace', inputPlace);
-    const mockVal = (str) => {
-      _.map(inputPlace, (item, index) => {
-        let arr = [];
-        arr.push(item.name);
-        setArrInput(arr);
-      });
-      return {
-        value: arrInput,
-      };
-    };
+
     const [value, setValue] = useState("");
     //Function covert phút => giờ phút
     function timeConvert(n) {
       var num = n;
-      var hours = (num / 60);
+      var hours = num / 60;
       var rhours = Math.floor(hours);
       var minutes = (hours - rhours) * 60;
       var rminutes = Math.round(minutes);
       return rhours + "h" + rminutes;
+    }
+    const [input, setInput] = useState([]);
+    const boweloadData = useCallback(async () => {
+      //api điểm đến
+      if (input === "") {
+        setInputPlace([]);
+      } else {
+        if (input != "") {
+          const urlPlace =
+            "https://place.havaz.vn/api/v1/places?input=" +
+            input +
+            "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+          Axios.get(urlPlace).then((repos) => {
+            const result = repos.data.data;
+            setInputPlace(result);
+          });
+        }
       }
-      
+    }, [input]);
+    useEffect(() => {
+      clearTimeout(time);
+      time = setTimeout(boweloadData, 800);
+    }, [boweloadData]);
     const onSearch = (searchText) => {
-      onChangeInput(searchText);
-      setOptions(!searchText ? [] : [mockVal(searchText)]);
+      setInput(searchText);
+      // onChangeInput(searchText);
     };
 
     const onSelect = (data) => {
       // console.log('onSelect', data);
     };
+    console.log(inputPlace);
 
     const onChange = (data) => {
       setValue(data);
     };
 
-    const onChangeInput = (e) => {
-      setParams(
-        (preState) => {
-          let nextState = { ...preState };
-          nextState.input = e;
-          return nextState;
-        },
-        [params]
-      );
-    };
     const getQuery = useCallback(
       (value, name) => {
         setParams((preState) => {
@@ -217,11 +213,7 @@ const List = memo(
                           >
                             {_.map(dataPlace, (item, index) => {
                               return (
-                                <TreeNode
-                                  value={item.id*10}
-                                  key={item.id*10}
-                                  title={item.name}
-                                >
+                                <TreeNode key={item.id * 10} title={item.name}>
                                   {_.map(item.children, (itemChild, key) => {
                                     return (
                                       <TreeNode
@@ -266,12 +258,13 @@ const List = memo(
                             // options={inputPlace}
                             onSelect={onSelect}
                             onSearch={onSearch}
+                            allowClear={true}
                             placeholder="Chọn điểm đến"
                           >
-                            {inputPlace.map((e) => (
-                              <Option key={e.name}>
+                            {inputPlace.map((e, key) => (
+                              <Option key={key} value={e.name}>
                                 <b>{e.name}</b>
-                                <br/>
+                                <br />
                                 <small>{e.description}</small>
                               </Option>
                             ))}
@@ -400,7 +393,7 @@ const List = memo(
               <div style={{ marginBottom: "48px" }}>
                 <Row style={{ margin: "-8px -8px 8px -8px" }}>
                   {_.map(data, (item, index) => {
-                    var url = "https://hasonhaivan.com/";
+                    var url = "http://localhost:3000/";
                     return (
                       <Col
                         xs={24}
@@ -411,8 +404,8 @@ const List = memo(
                       >
                         <a
                           className="cardview d-flex flex-column"
-                          target="_blank"
-                          href={`${url}/xe-khach/${item.slug}`}
+                          target="_self"
+                          href={`${url}xe-khach/${item.slug}`}
                           style={{
                             borderRadius: "4px",
                             textDecoration: "none",
@@ -457,7 +450,10 @@ const List = memo(
                                   alt="Thời gian"
                                   style={{ width: "16px", height: "16px" }}
                                 />
-                                <div> {timeConvert(item.tuy_thoi_gian_chay)} </div>
+                                <div>
+                                  {" "}
+                                  {timeConvert(item.tuy_thoi_gian_chay)}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>

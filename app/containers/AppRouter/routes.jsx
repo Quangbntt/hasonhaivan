@@ -5,6 +5,7 @@ import SignIn from "containers/SignIn/Loadable";
 
 import Dashboard from "containers/Dashboard/Loadable";
 import Home from "containers/Home/Loadable";
+import TripRoute from "containers/TripRoute/Loadable";
 
 import Profile from "containers/Profile/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
@@ -47,6 +48,11 @@ export const authorizedRoutes = [
     path: "/",
     exact: true,
     component: Home,
+  },
+  {
+    path: "/xe-khach/:from/:to",
+    exact: true,
+    component: TripRoute,
   },
   {
     path: "*",
