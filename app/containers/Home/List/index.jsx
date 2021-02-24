@@ -215,7 +215,6 @@ const List = memo(
               <div style={{ marginBottom: "48px" }}>
                 <Row style={{ margin: "-8px -8px 8px -8px" }}>
                   {_.map(data, (item, index) => {
-                    var url = "http://localhost:3000/";
                     return (
                       <Col
                         xs={24}
@@ -227,7 +226,7 @@ const List = memo(
                         <a
                           className="cardview d-flex flex-column"
                           target="_self"
-                          href={`${url}xe-khach/${item.slug}`}
+                          href={`/xe-khach/${item.slug}`}
                           onClick={() => setCookie(item, index)}
                           style={{
                             borderRadius: "4px",

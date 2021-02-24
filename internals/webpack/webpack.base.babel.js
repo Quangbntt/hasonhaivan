@@ -44,7 +44,7 @@ module.exports = (options) => {
       {
         // Compile into js/build.js
         path: path.resolve(process.cwd(), "app-build"),
-        publicPath: "/hasonhaivan/",
+        publicPath: "/",
       },
       options.output
     ), // Merge with env dependent settings
