@@ -52,6 +52,8 @@ const List = memo(
     setDataPlace,
     dataSlider,
     setDataSlider,
+    dataTrip,
+    setDataTrip,
   }) => {
     const sliderRef = useRef();
     const routeRef = useRef();
@@ -147,185 +149,7 @@ const List = memo(
           [className]: true,
         })}
       >
-        <Row>
-          <Col sm={24} xs={24} md={24} lg={24}>
-            <div style={{ position: "relative", height: "456px" }}>
-              <div
-                style={{
-                  possition: "absolute",
-                  top: "0",
-                  height: "456px",
-                  width: "100%",
-                }}
-              >
-                <Slider {...settings} className="sidebar-slider normal-slider">
-                  <div style={{ width: "100%" }}>
-                    <a style={{ width: "100%", height: "100%" }}>
-                      <img className="slider" src={bannerhv} alt="banner" />
-                    </a>
-                  </div>
-                </Slider>
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <div style={{ position: "relative", top: "-63px", width: "100%" }}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div
-              style={{
-                flex: "1",
-                maxWidth: "1200px",
-                position: "relative",
-                background: "#fff",
-              }}
-            >
-              <div className="search">
-                <div style={{ padding: "16px" }}>
-                  <Row>
-                    <Col
-                      className="tree_select"
-                      sm={24}
-                      lg={24}
-                      xs={24}
-                      md={24}
-                    >
-                      <Row className="padding_input" gutter={16}>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          >
-                            Điểm xuất phát
-                          </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          >
-                            Điểm đến
-                          </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          >
-                            Ngày đi
-                          </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="padding_input" gutter={16}>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <TreeSelect
-                            showSearch
-                            style={{ width: "100%" }}
-                            showArrow={false}
-                            // value={this.state.value}
-                            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                            placeholder="Chọn điểm xuất phát"
-                            allowClear
-                            switcherIcon={<RightOutlined />}
-                            treeDefaultExpandAll={false}
-                            // onChange={this.onChange}
-                          >
-                            {_.map(dataPlace, (item, index) => {
-                              return (
-                                <TreeNode key={item.id * 10} title={item.name}>
-                                  {_.map(item.children, (itemChild, key) => {
-                                    return (
-                                      <TreeNode
-                                        value={itemChild.id}
-                                        key={itemChild.id}
-                                        title={
-                                          <>
-                                            <p
-                                              style={{
-                                                color: "#000",
-                                                fontWeight: "500",
-                                                margin: "0px",
-                                                padding: "0px",
-                                              }}
-                                            >
-                                              {itemChild.name}
-                                            </p>
-                                            <p
-                                              style={{
-                                                color: "#000",
-                                                width: "200px",
-                                                whiteSpace: "nowrap",
-                                                overflow: "hidden",
-                                                margin: "0px",
-                                                padding: "0px",
-                                              }}
-                                            >
-                                              {itemChild.address}
-                                            </p>
-                                          </>
-                                        }
-                                      />
-                                    );
-                                  })}
-                                </TreeNode>
-                              );
-                            })}
-                          </TreeSelect>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <AutoComplete
-                            // options={inputPlace}
-                            onSelect={onSelect}
-                            onSearch={onSearch}
-                            allowClear={true}
-                            placeholder="Chọn điểm đến"
-                          >
-                            {inputPlace.map((e, key) => (
-                              <Option key={key} value={e.name}>
-                                <b>{e.name}</b>
-                                <br />
-                                <small>{e.description}</small>
-                              </Option>
-                            ))}
-                          </AutoComplete>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <DatePicker
-                            size="large"
-                            value={day}
-                            placeholder={["Ngày"]}
-                            onChange={(day) => {
-                              if (day) {
-                                getQuery(day, "day");
-                              } else {
-                                let day = moment();
-                                getQuery(day, "day");
-                              }
-                            }}
-                          />
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            className="d-flex justify-content-center align-items-center noselect"
-                            style={{
-                              width: "100%",
-                              height: "56px",
-                              backgroundColor: "#FFDD2B",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            <span style={{ fontSize: "24px" }}>Tìm vé</span>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ flex: "1 1 0%", maxWidth: "1200px" }}>
             <h1
@@ -336,7 +160,9 @@ const List = memo(
                 marginBottom: "0px",
               }}
             >
-              Xe Khách Bến xe Bắc Ninh - Bến xe Sapa
+              {_.map(dataTrip, (item, index) => {
+                return "Xe Khách " + item.from.name + " - " + item.to.city.name;
+              })}
             </h1>
             <div>
               <Row style={{ margin: "-8px -8px 8px" }}>
@@ -441,7 +267,7 @@ const List = memo(
                         justify="space-around"
                         align="middle"
                         onClick={() =>
-                          setState({ isOpen: true, photoIndex: 0 })
+                          setState({ isOpen: true, photoIndex: 4 })
                         }
                       >
                         <Col style={{ color: "#fff", textAlign: "center" }}>
@@ -486,122 +312,157 @@ const List = memo(
                       }
                     />
                   )}
-                  <Card
-                    title="Bắc Ninh-Sapa"
-                    style={{
-                      width: "100%",
-                      cursor: "pointer",
-                    }}
-                    onClick={onLoadData}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: "0px",
-                        fontSize: "14px",
-                        lineHeight: "17px",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div style={{ display: "flex", flexDirection: "row" }}>
-                        <b>Xe Tiêu Chuẩn (BNI) </b>
-                        <span style={{ fontSize: "20px" }}>&nbsp;•&nbsp;</span>
-                        <span>25 chỗ trống</span>
-                      </div>
-                      <div style={{ textAlign: "end" }}>
-                        <b style={{ color: "rgb(255, 194, 14)" }}>230.000₫</b>
-                      </div>
-                    </div>
-                    <Row justify="center">
-                      <Col justify="center">
-                        <div style={{ height: "5px" }} />
-                        <div
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "3px",
-                            backgroundColor: "rgb(88, 89, 91)",
-                            marginTop: "1px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            width: "2px",
-                            height: "35px",
-                            backgroundColor: "rgb(88, 89, 91)",
-                            margin: "2px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            backgroundColor: "rgb(88, 89, 91)",
-                            marginTop: "1px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            height: "16px",
-                            border: "1px dashed rgb(88, 89, 91)",
-                            marginTop: "1px",
-                            width: "3px",
-                            marginLeft: "2px",
-                          }}
-                        />
-                        <div
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            border: "1px solid rgb(88, 89, 91)",
-                            marginTop: "1px",
-                          }}
-                        />
-                        <div style={{ height: "5px" }} />
-                      </Col>
-                      <Col style={{ marginLeft: "6px", marginRight: "15px" }}>
-                        <div style={{ fontWeight: "bold", fontSize: "16px" }}>
-                          22:00
-                        </div>
-                        <div style={{ padding: "2px 0px", fontSize: "12px" }}>
-                          4h50p
-                        </div>
-                        <div style={{ fontWeight: "bold", fontSize: "16px" }}>
-                          02:05
-                        </div>
-                        <div style={{ height: "21px" }} />
-                      </Col>
-                      <Col style={{ marginLeft: "6px", marginRight: "15px" }}>
-                        <div style={{ fontWeight: "bold", fontSize: "16px" }}>
-                          Bx Bắc Ninh
-                        </div>
-                        <div style={{ padding: "2px 0px", fontSize: "12px" }}>
-                          Xe liên tỉnh
-                        </div>
-                        <div style={{ fontWeight: "bold", fontSize: "16px" }}>
-                          VP 062 Phan Đình Phùng
-                        </div>
-                        <div style={{ height: "21px" }}>
-                          Lào Cai (Xe trung chuyển)
-                        </div>
-                      </Col>
-                      <Col
-                        style={{ marginLeft: "6px", marginRight: "15px" }}
-                        flex="auto"
+                  {_.map(dataTrip, (item, key) => {
+                    return (
+                      <Card
+                        title={item.from.name + " - " + item.to.city.name}
+                        style={{
+                          width: "100%",
+                          cursor: "pointer",
+                          boxShadow: "0 4px 8px rgb(0 0 0 / 10%)",
+                          marginBottom: "20px",
+                        }}
+                        onClick={onLoadData}
                       >
-                        <Row
-                          justify="end"
-                          align="middle"
-                          style={{ height: "100%" }}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            padding: "0px",
+                            fontSize: "14px",
+                            lineHeight: "17px",
+                            justifyContent: "space-between",
+                          }}
                         >
-                          <Col>
-                            <DownOutlined />
+                          <div
+                            style={{ display: "flex", flexDirection: "row" }}
+                          >
+                            <b>{item.product.name}</b>
+                            <span style={{ fontSize: "20px" }}>
+                              &nbsp;•&nbsp;
+                            </span>
+                            <span>{item.total_seat_free} chỗ trống</span>
+                          </div>
+                          <div style={{ textAlign: "end" }}>
+                            <b style={{ color: "rgb(255, 194, 14)" }}>
+                              {
+                                (item.price_range.from = item.price_range.to
+                                  ? item.price_range.from.toLocaleString() + "đ"
+                                  : item.price_range.from.toLocaleString() +
+                                    " - " +
+                                    item.price_range.to.toLocaleString() +
+                                    "đ")
+                              }
+                            </b>
+                          </div>
+                        </div>
+                        <Row justify="center">
+                          <Col justify="center">
+                            <div style={{ height: "5px" }} />
+                            <div
+                              style={{
+                                width: "6px",
+                                height: "6px",
+                                borderRadius: "3px",
+                                backgroundColor: "rgb(88, 89, 91)",
+                                marginTop: "1px",
+                              }}
+                            />
+                            <div
+                              style={{
+                                width: "2px",
+                                height: "35px",
+                                backgroundColor: "rgb(88, 89, 91)",
+                                margin: "2px",
+                              }}
+                            />
+                            <div
+                              style={{
+                                width: "6px",
+                                height: "6px",
+                                backgroundColor: "rgb(88, 89, 91)",
+                                marginTop: "1px",
+                              }}
+                            />
+                            <div
+                              style={{
+                                height: "16px",
+                                border: "1px dashed rgb(88, 89, 91)",
+                                marginTop: "1px",
+                                width: "3px",
+                                marginLeft: "2px",
+                              }}
+                            />
+                            <div
+                              style={{
+                                width: "6px",
+                                height: "6px",
+                                border: "1px solid rgb(88, 89, 91)",
+                                marginTop: "1px",
+                              }}
+                            />
+                            <div style={{ height: "5px" }} />
+                          </Col>
+                          <Col
+                            style={{ marginLeft: "6px", marginRight: "15px" }}
+                          >
+                            <div
+                              style={{ fontWeight: "bold", fontSize: "16px" }}
+                            >
+                              {item.departure_time}
+                            </div>
+                            <div
+                              style={{ padding: "2px 0px", fontSize: "12px" }}
+                            >
+                              {timeConvert(item.duration)}
+                            </div>
+                            <div
+                              style={{ fontWeight: "bold", fontSize: "16px" }}
+                            >
+                              {item.destination_time}
+                            </div>
+                            <div style={{ height: "21px" }} />
+                          </Col>
+                          <Col
+                            style={{ marginLeft: "6px", marginRight: "15px" }}
+                          >
+                            <div
+                              style={{ fontWeight: "bold", fontSize: "16px" }}
+                            >
+                              {item.from.name}
+                            </div>
+                            <div
+                              style={{ padding: "2px 0px", fontSize: "12px" }}
+                            >
+                              Xe liên tỉnh
+                            </div>
+                            <div
+                              style={{ fontWeight: "bold", fontSize: "16px" }}
+                            >
+                              {item.to.name}
+                            </div>
+                            <div style={{ height: "21px" }}>
+                              {item.to.city.name} (Xe trung chuyển)
+                            </div>
+                          </Col>
+                          <Col
+                            style={{ marginLeft: "6px", marginRight: "15px" }}
+                            flex="auto"
+                          >
+                            <Row
+                              justify="end"
+                              align="middle"
+                              style={{ height: "100%" }}
+                            >
+                              <Col>
+                                <DownOutlined />
+                              </Col>
+                            </Row>
                           </Col>
                         </Row>
-                      </Col>
-                    </Row>
-                  </Card>
+                      </Card>
+                    );
+                  })}
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={8} style={{ padding: "8px" }}>
                   <div
@@ -885,7 +746,7 @@ const List = memo(
                                   width: "26px",
                                   height: "21px",
                                   transform: "rotate(180deg)",
-                                  cursor: "pointer"
+                                  cursor: "pointer",
                                 }}
                                 onClick={() => {
                                   routeRef.current.prev();
@@ -957,7 +818,7 @@ const List = memo(
                                 style={{
                                   width: "26px",
                                   height: "21px",
-                                  cursor: "pointer"
+                                  cursor: "pointer",
                                 }}
                                 onClick={() => {
                                   routeRef.current.next();

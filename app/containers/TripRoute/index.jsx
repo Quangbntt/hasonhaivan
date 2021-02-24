@@ -25,6 +25,7 @@ const Home = memo(({}) => {
   });
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
+  const [dataTrip, setDataTrip] = useState([]);
   const [dataSlider, setDataSlider] = useState([]);
   const [dataPlace, setDataPlace] = useState([]);
   const [inputPlace, setInputPlace] = useState([]);
@@ -36,6 +37,14 @@ const Home = memo(({}) => {
   });
   const boweloadData = useCallback(async () => {
     setLoading(true);
+    //Api lấy chi tiết chuyến
+    const urlTrip = "https://apiweb.hasonhaivan.com/api/trips?start_lat=21.1805787&start_lng=106.0610753&end_lat=22.4851216&end_lng=103.9783688&date="+moment().format("YYYY-MM-DD");
+    Axios.get(urlTrip).then((repos) => {
+      const resTrip = repos.data.data;
+      resTrip && setDataTrip(resTrip);
+      setLoading(false);
+    });
+
     // //Api lấy danh sách các tuyến
     const urlHome = "https://cms.hasonhaivan.com/api/homeWayRoads";
     Axios.get(urlHome).then((repos) => {
@@ -44,7 +53,7 @@ const Home = memo(({}) => {
       setData(response);
       setLoading(false);
     });
-
+    
     //Api lấy ảnh cho slide
     const urlSlider =
       "https://cms.hasonhaivan.com/api/intercity-listing?wayroad_id=7";
@@ -81,6 +90,8 @@ const Home = memo(({}) => {
               setParams={setParams}
               dataSlider={dataSlider}
               setDataSlider={setDataSlider}
+              dataTrip={dataTrip}
+              setDataTrip={setDataTrip}
           />
           )
         }

@@ -17,6 +17,7 @@ import TopMenu from "./TopMenu";
 import HeaderSidebar from "./HeaderSidebar";
 import FooterPage from "./FooterPage";
 import SubTopMenu from "./SubTopMenu";
+import Slider from "./Slider";
 import SideBar from "./SideBar";
 import classNames from "classnames";
 import { Table } from "antd";
@@ -66,6 +67,7 @@ const AuthorizedLayout = ({
       })}
     >
       <HeaderSidebar />
+      <Slider />
       <Layout className="site-layout">
         {/* <TopMenu
           toggle={toggle}
