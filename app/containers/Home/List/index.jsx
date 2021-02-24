@@ -31,7 +31,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { RightOutlined } from "@ant-design/icons";
-import bannerhv from "images/bannerhv.jpg";
+import { $Cookies } from "utils/cookies";
 import Axios from "axios";
 import icon_phone1 from "images/icon_phone1.png";
 import icon_phone2 from "images/icon_phone2.png";
@@ -44,7 +44,9 @@ const { Option } = AutoComplete;
 const List = memo(
   ({ className, setParams, data, params, dataPlace, setDataPlace }) => {
     const [inputPlace, setInputPlace] = useState([]);
-
+    const setCookie = (item, index) => {
+      $Cookies.set("tuy_id", item.tuy_id);
+    }
     _.map(dataPlace, (itemDatatPlace, index) => {
       itemDatatPlace.title = itemDatatPlace.name;
       itemDatatPlace.value = itemDatatPlace.id;
@@ -66,27 +68,27 @@ const List = memo(
       return rhours + "h" + rminutes;
     }
     const [input, setInput] = useState([]);
-    const boweloadData = useCallback(async () => {
-      //api điểm đến
-      if (input === "") {
-        setInputPlace([]);
-      } else {
-        if (input != "") {
-          const urlPlace =
-            "https://place.havaz.vn/api/v1/places?input=" +
-            input +
-            "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
-          Axios.get(urlPlace).then((repos) => {
-            const result = repos.data.data;
-            setInputPlace(result);
-          });
-        }
-      }
-    }, [input]);
-    useEffect(() => {
-      clearTimeout(time);
-      time = setTimeout(boweloadData, 800);
-    }, [boweloadData]);
+    // const boweloadData = useCallback(async () => {
+    //   //api điểm đến
+    //   if (input === "") {
+    //     setInputPlace([]);
+    //   } else {
+    //     if (input != "") {
+    //       const urlPlace =
+    //         "https://place.havaz.vn/api/v1/places?input=" +
+    //         input +
+    //         "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+    //       Axios.get(urlPlace).then((repos) => {
+    //         const result = repos.data.data;
+    //         setInputPlace(result);
+    //       });
+    //     }
+    //   }
+    // }, [input]);
+    // useEffect(() => {
+    //   clearTimeout(time);
+    //   time = setTimeout(boweloadData, 800);
+    // }, [boweloadData]);
     const onSearch = (searchText) => {
       setInput(searchText);
       // onChangeInput(searchText);
@@ -95,7 +97,6 @@ const List = memo(
     const onSelect = (data) => {
       // console.log('onSelect', data);
     };
-    console.log(inputPlace);
 
     const onChange = (data) => {
       setValue(data);
@@ -227,6 +228,7 @@ const List = memo(
                           className="cardview d-flex flex-column"
                           target="_self"
                           href={`${url}xe-khach/${item.slug}`}
+                          onClick={() => setCookie(item, index)}
                           style={{
                             borderRadius: "4px",
                             textDecoration: "none",
@@ -315,6 +317,12 @@ const List = memo(
 );
 
 export default styled(List)`
+  input#rc_select_0, input#rc_select_6 {
+    height: 55px;
+  }
+  input#control-ref_name {
+    height: 55px!important;
+  }
   .slider {
     height: 456px;
     background-color: rgb(62, 62, 62);
@@ -349,15 +357,15 @@ export default styled(List)`
   // span.ant-select-selection-placeholder {
   //   margin-top; 12px!important;
   // }
-  // .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
-  //   line-height: 55px;
-  // }
-  // input#rc_select_1 {
-  //   height: 55px;
-  // }
-  // .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-  //   height: 56px !important;
-  // }
+  .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 55px;
+  }
+  input#rc_select_1 {
+    height: 55px;
+  }
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    height: 56px !important;
+  }
   .h3_title {
     font-size: 24px;
     font-weight: bold;
@@ -371,15 +379,13 @@ export default styled(List)`
     text-align: center;
     margin-top: 4px;
   }
-  // .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector::after, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
-  //   line-height: 55px;
-  // }
+  .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector::after, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item, .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 55px;
+  }
   .cardview {
     box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
     background-color: #fff;
     z-index: 9;
   }
-  input#rc_select_0, input#rc_select_6 {
-    height: 55px;
-  }
+  
 `;

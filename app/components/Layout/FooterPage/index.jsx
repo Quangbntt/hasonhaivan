@@ -19,7 +19,7 @@ const Footer = memo(({ className }) => {
     <div className={classNames({
       [className]: true
     })}
-    style={{ backgroundColor: "#EDEEEE" }}
+    style={{ backgroundColor: "rgb(51, 51, 51)", padding: "0px" }}
     >
       <div style={{ zIndex: "1000" }}>
         <div style={{ width: "100%", backgroundColor: "#EDEEEE", display: "flex", justifyContent: "center", flexDirection: "row " }}>

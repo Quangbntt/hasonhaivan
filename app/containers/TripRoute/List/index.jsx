@@ -791,7 +791,7 @@ const List = memo(
                                 >
                                   Giá vé trung bình
                                 </div>
-                                <div>Từ {item.price_avg}đ</div>
+                                <div>{item.price_avg}</div>
                               </Row>
                               <Row style={{ lineHeight: "150%" }}>
                                 <div

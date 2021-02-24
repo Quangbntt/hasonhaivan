@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback, useRef } from "react";
 import { Spin, Select } from "antd";
 import _ from "lodash";
 import moment from "moment";
@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { Ui } from "utils/Ui";
 import ServiceBase from "utils/ServiceBase";
 import Pagination from "components/Paginate/index";
+
 import List from "./List";
 import Axios from "axios";
 
@@ -41,26 +42,13 @@ const Home = memo(({}) => {
       setTotalLength(_.get(response, "value.total"));
       setData(response);
     });
-    // //api điểm đến
-    // if (params.input === "") {
-    //   setInputPlace([]);
-    // } else {
-    //   const urlPlace =
-    //     "https://place.havaz.vn/api/v1/places?input=" +
-    //     params.input +
-    //     "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
-    //   Axios.get(urlPlace).then((repos) => {
-    //     const result = repos.data.data;
-    //     setInputPlace(result);
-    //   });
-    // }
 
-    //api điểm bắt đầu
-    const url = "https://apiweb.hasonhaivan.com/api/places";
-    Axios.get(url).then((repos) => {
-      const allRepos = repos.data;
-      setDataPlace(allRepos);
-    });
+    // //api điểm bắt đầu
+    // const url = "https://apiweb.hasonhaivan.com/api/places";
+    // Axios.get(url).then((repos) => {
+    //   const allRepos = repos.data;
+    //   setDataPlace(allRepos);
+    // });
   }, [params]);
   useEffect(() => {
     clearTimeout(time);
@@ -69,8 +57,6 @@ const Home = memo(({}) => {
   return (
     <>
       <List
-        // inputPlace={inputPlace}
-        // setInputPlace={setInputPlace}
         loading={loading}
         setLoading={setLoading}
         data={data}
@@ -83,4 +69,5 @@ const Home = memo(({}) => {
     </>
   );
 });
-export default Home;
+export default Home
+  

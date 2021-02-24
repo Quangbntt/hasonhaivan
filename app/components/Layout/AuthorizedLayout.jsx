@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { memo, useEffect, useCallback, useState } from "react";
+import React, { memo, useEffect, useCallback, useState, useRef } from "react";
 import {
   makeSelectIsAuthenticated,
   makeSelectAppConfig,
@@ -24,6 +24,7 @@ import { Table } from "antd";
 import { $Cookies } from "utils/cookies";
 import { JWT_TOKEN } from "utils/constants";
 import Globals from "utils/globals";
+import LoadingBar from 'react-top-loading-bar';
 
 const { Header, Footer, Content, Sider } = Layout;
 const AuthorizedLayout = ({
@@ -36,6 +37,7 @@ const AuthorizedLayout = ({
   onLogOut,
   appConfig,
 }) => {
+  const [progress, setProgress] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -66,6 +68,7 @@ const AuthorizedLayout = ({
         [className]: true,
       })}
     >
+      <LoadingBar color='#3f7aef' progress={progress} onLoaderFinished={() => setProgress(0)}/>
       <HeaderSidebar />
       <Slider />
       <Layout className="site-layout">

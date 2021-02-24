@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { Ui } from "utils/Ui";
 import ServiceBase from "utils/ServiceBase";
 import Pagination from "components/Paginate/index";
+import { $Cookies } from "utils/cookies";
 import List from "./List";
 import Axios from "axios";
 
@@ -56,7 +57,7 @@ const Home = memo(({}) => {
     
     //Api lấy ảnh cho slide
     const urlSlider =
-      "https://cms.hasonhaivan.com/api/intercity-listing?wayroad_id=7";
+      "https://cms.hasonhaivan.com/api/intercity-listing?wayroad_id="+$Cookies.get("tuy_id");
     Axios.get(urlSlider).then((repos) => {
       const resSlider = repos.data.data;
       setDataSlider(resSlider);
