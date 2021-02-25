@@ -35,7 +35,6 @@ const Home = memo(({progress, setProgress}) => {
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
   const [dataPlace, setDataPlace] = useState([]);
-  const [inputPlace, setInputPlace] = useState([]);
   const [params, setParams] = useState({
     input: "",
     api_token: "6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v",
@@ -43,20 +42,6 @@ const Home = memo(({progress, setProgress}) => {
     limit: 100,
   });
   const boweloadData = useCallback(async () => {
-    // //api điểm đến
-    if (params.input === "") {
-      setInputPlace([]);
-    } else {
-      const urlPlace =
-        "https://place.havaz.vn/api/v1/places?input=" +
-        params.input +
-        "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
-      Axios.get(urlPlace).then((repos) => {
-        const result = repos.data.data;
-        setInputPlace(result);
-      });
-    }
-
     //api điểm bắt đầu
     const url = "https://apiweb.hasonhaivan.com/api/places";
     Axios.get(url).then((repos) => {
@@ -72,8 +57,6 @@ const Home = memo(({progress, setProgress}) => {
   return (
     <>
       <List
-        // inputPlace={inputPlace}
-        // setInputPlace={setInputPlace}
         loading={loading}
         setLoading={setLoading}
         params={params}

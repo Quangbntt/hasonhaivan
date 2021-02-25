@@ -38,13 +38,16 @@ import icon_phone2 from "images/icon_phone2.png";
 import icon_phone3 from "images/icon_phone3.png";
 import icon_clock from "images/icon_clock.png";
 
+let timeout;
+let currentValue;
 let time = null;
 const { TreeNode } = TreeSelect;
 const { Option } = AutoComplete;
+var md5 = require("md5");
 const List = memo(
   ({ className, setParams, params, dataPlace, setDataPlace }) => {
     const [inputPlace, setInputPlace] = useState([]);
-
+    const [treeInputPlace, setTreeInputPlace] = useState([]);
     _.map(dataPlace, (itemDatatPlace, index) => {
       itemDatatPlace.title = itemDatatPlace.name;
       itemDatatPlace.value = itemDatatPlace.id;
@@ -55,16 +58,106 @@ const List = memo(
       itemDatatPlace.children = itemDatatPlace.places;
     });
 
+    const dataTest =  [
+      {
+        "id": "google.ChIJoRyG2ZurNTERqRfKcnt_iOc",
+        "name": "Hà Nội",
+        "description": "Hà Nội, Hoàn Kiếm, Hanoi, Vietnam"
+      },
+      {
+        "id": "google.ChIJ25psgYOpNTERVArL1GBkXLw",
+        "name": "Hà Nội Homeland",
+        "description": "Hà Nội Homeland, Ngõ 29 Thượng Thanh, Thượng Thanh, Long Biên, Hanoi, Vietnam"
+      },
+      {
+        "id": "google.ChIJI6yEBSKrNTER_wwH1XHHswU",
+        "name": "Hà Nội Golden Lake",
+        "description": "Hà Nội Golden Lake, Giang Vo, Ba Đình, Hanoi, Vietnam"
+      },
+      {
+        "id": "google.ChIJKQqAE44ANTERDbkQYkF-mAI",
+        "name": "Hà Nội",
+        "description": "Hà Nội, Vietnam"
+      },
+      {
+        "id": "google.EjpIYSBOb2kgLSBUaGFpIE5ndXllbiBFeHByZXNzd2F5LCBTw7NjIFPGoW4sIEhhbm9pLCBWaWV0bmFtIi4qLAoUChIJLQsuKU4ENTERJl--8T_QNpISFAoSCeWb_YgpAzUxEbl5QBstzw0_",
+        "name": "Ha Noi - Thai Nguyen Expressway",
+        "description": "Ha Noi - Thai Nguyen Expressway, Sóc Sơn, Hanoi, Vietnam"
+      }
+    ]
+
+    const [rowPhone, setRowPhone] = useState({
+      dataPhone: [],
+      value: undefined,
+      loadingPhone: false,
+    });
+    // tìm sđt
+    const onSearchPhone = (value) => {
+      console.log(value);
+      if (value) {
+        fetch(value, (data) =>
+          setRowPhone((preState) => {
+            let nextState = { ...preState };
+            nextState.dataPhone = data;
+            nextState.value = value;
+            return nextState;
+          })
+        );
+      } else {
+        setRowPhone((preState) => {
+          let nextState = { ...preState };
+          nextState.dataPhone = [];
+          return nextState;
+        });
+      }
+    };
+    // call api tìm sdt
+    const fetch = (value, callback) => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      currentValue = value;
+      // sdt
+      const fake = async () => {
+        if (value.length >= 3) {
+          if (currentValue === "") {
+            setTreeInputPlace([]);
+          } else {
+            if (currentValue != "") {
+              const urlPlace =
+                "https://place.havaz.vn/api/v1/places?input=" +
+                currentValue +
+                "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+              Axios.get(urlPlace).then((repos) => {
+                const result = repos.data.data;
+                setTreeInputPlace(result);
+              });
+            }
+          }
+        }
+      };
+      timeout = setTimeout(fake, 800);
+    };
+
+    const onTreeSearch = (e) => {
+      if (e === "") {
+        setTreeInputPlace([]);
+      } else {
+        if (e != "") {
+          const urlPlace =
+            "https://place.havaz.vn/api/v1/places?input=" +
+            e +
+            "&api_token=6tihDYHMeDKem5nvi2SnZ04o4cXRloZsyoMkJ6RsltPy5irdkCpR0QTyCk2v";
+          Axios.get(urlPlace).then((repos) => {
+            const result = repos.data.data;
+            setTreeInputPlace(result);
+          });
+        }
+      }
+    };
     const [value, setValue] = useState("");
-    //Function covert phút => giờ phút
-    function timeConvert(n) {
-      var num = n;
-      var hours = num / 60;
-      var rhours = Math.floor(hours);
-      var minutes = (hours - rhours) * 60;
-      var rminutes = Math.round(minutes);
-      return rhours + "h" + rminutes;
-    }
+
     const [input, setInput] = useState([]);
     const boweloadData = useCallback(async () => {
       //api điểm đến
@@ -95,7 +188,6 @@ const List = memo(
     const onSelect = (data) => {
       // console.log('onSelect', data);
     };
-    console.log(inputPlace);
 
     const onChange = (data) => {
       setValue(data);
@@ -126,7 +218,7 @@ const List = memo(
         className={classNames({
           [className]: true,
         })}
-        style={{background: "#fff"}}
+        style={{ background: "#fff" }}
       >
         <Row>
           <Col sm={24} xs={24} md={24} lg={24}>
@@ -201,57 +293,105 @@ const List = memo(
                       <Row className="padding_input" gutter={16}>
                         <Col sm={6} lg={6} xs={6} md={6}>
                           <TreeSelect
+                            // treeData={dataPlace}
                             showSearch
                             style={{ width: "100%" }}
                             showArrow={false}
-                            // value={this.state.value}
+                            // onSearch={(e) => onTreeSearch(e)}
+                            onSearch={onSearchPhone}
                             dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                             placeholder="Chọn điểm xuất phát"
                             allowClear
+                            multiple={false}
                             switcherIcon={<RightOutlined />}
                             treeDefaultExpandAll={false}
                             // onChange={this.onChange}
                           >
-                            {_.map(dataPlace, (item, index) => {
-                              return (
-                                <TreeNode key={item.id * 10} title={item.name}>
-                                  {_.map(item.children, (itemChild, key) => {
-                                    return (
-                                      <TreeNode
-                                        value={itemChild.id}
-                                        key={itemChild.id}
-                                        title={
-                                          <>
-                                            <p
-                                              style={{
-                                                color: "#000",
-                                                fontWeight: "500",
-                                                margin: "0px",
-                                                padding: "0px",
-                                              }}
-                                            >
-                                              {itemChild.name}
-                                            </p>
-                                            <p
-                                              style={{
-                                                color: "#000",
-                                                width: "200px",
-                                                whiteSpace: "nowrap",
-                                                overflow: "hidden",
-                                                margin: "0px",
-                                                padding: "0px",
-                                              }}
-                                            >
-                                              {itemChild.address}
-                                            </p>
-                                          </>
+                            {treeInputPlace.length > 0
+                              ? _.map(treeInputPlace, (item, index) => {
+                                  return (
+                                    <TreeNode
+                                      // key={md5(item.id+index)}
+                                      key={item.id + index}
+                                      value={item.name}
+                                      title={
+                                        <>
+                                          <p
+                                            style={{
+                                              color: "#000",
+                                              fontWeight: "600",
+                                              margin: "0px",
+                                              padding: "0px",
+                                              width: "200px",
+                                              whiteSpace: "nowrap",
+                                              overflow: "hidden",
+                                            }}
+                                          >
+                                            {item.name}
+                                          </p>
+                                          <p
+                                            style={{
+                                              color: "#000",
+                                              width: "200px",
+                                              whiteSpace: "nowrap",
+                                              overflow: "hidden",
+                                              margin: "0px",
+                                              padding: "0px",
+                                            }}
+                                          >
+                                            {item.description}
+                                          </p>
+                                        </>
+                                      }
+                                    />
+                                  );
+                                })
+                              : _.map(dataPlace, (item, index) => {
+                                  return (
+                                    <TreeNode
+                                      key={item.id * 10}
+                                      title={item.name}
+                                    >
+                                      {_.map(
+                                        item.children,
+                                        (itemChild, key) => {
+                                          return (
+                                            <TreeNode
+                                              value={itemChild.id}
+                                              key={itemChild.id}
+                                              title={
+                                                <>
+                                                  <p
+                                                    style={{
+                                                      color: "#000",
+                                                      fontWeight: "500",
+                                                      margin: "0px",
+                                                      padding: "0px",
+                                                    }}
+                                                  >
+                                                    {itemChild.name}
+                                                  </p>
+                                                  <p
+                                                    style={{
+                                                      color: "#000",
+                                                      width: "200px",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      margin: "0px",
+                                                      padding: "0px",
+                                                    }}
+                                                  >
+                                                    {itemChild.address}
+                                                  </p>
+                                                </>
+                                              }
+                                            />
+                                          );
                                         }
-                                      />
-                                    );
-                                  })}
-                                </TreeNode>
-                              );
-                            })}
+                                      )}
+                                    </TreeNode>
+                                  );
+                                })}
                           </TreeSelect>
                         </Col>
                         <Col sm={6} lg={6} xs={6} md={6}>
