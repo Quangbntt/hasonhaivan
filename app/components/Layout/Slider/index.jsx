@@ -1,4 +1,13 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
+import {
+  withGoogleMap,
+  withScriptjs,
+  GoogleMap,
+  Marker,
+  InfoWindow,
+  Polyline,
+  Polygon,
+} from "react-google-maps";
 import { Spin, Select } from "antd";
 import _ from "lodash";
 import moment from "moment";
@@ -15,7 +24,7 @@ import Axios from "axios";
 
 let time = null;
 
-const Home = memo(({}) => {
+const Home = memo(({progress, setProgress}) => {
   const [loading, setLoading] = useState(false);
   const [row, setRow] = useState({
     data: [],
@@ -53,6 +62,7 @@ const Home = memo(({}) => {
     Axios.get(url).then((repos) => {
       const allRepos = repos.data;
       setDataPlace(allRepos);
+      setProgress(100);
     });
   }, [params]);
   useEffect(() => {

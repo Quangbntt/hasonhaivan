@@ -8,23 +8,13 @@ import React, {
   useRef,
 } from "react";
 import {
-  Table,
-  Badge,
-  Menu,
-  Dropdown,
-  Space,
-  Button,
-  Input,
-  Spin,
-  Row,
-  Col,
-  TreeSelect,
-  DatePicker,
-  Divider,
-  Card,
-  Carousel,
-  AutoComplete,
-} from "antd";
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+  Polyline,
+} from "react-google-maps";
+import { Row, Col, TreeSelect, Card, Carousel, AutoComplete } from "antd";
 import classNames from "classnames";
 import moment from "moment";
 import _, { isNull } from "lodash";
@@ -33,11 +23,13 @@ import * as style from "components/Variables";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { RightOutlined, DownOutlined } from "@ant-design/icons";
+import { RightOutlined, DownOutlined, UserOutlined } from "@ant-design/icons";
 import bannerhv from "images/bannerhv.jpg";
 import Axios from "axios";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import topng from "images/10680260701556280914-128.png";
+import logoUser from "../../../images/7413069861556280903-128.png";
 
 let time = null;
 const { TreeNode } = TreeSelect;
@@ -143,13 +135,253 @@ const List = memo(
       autoplaySpeed: 2000,
     };
     const day = moment();
+
+    //Test api gg map
+    const centerMap = { lat: 21.001122, lng: 105.792992 };
+    const centerMap1 = { lat: 22.474033, lng: 103.966245 };
+    const pathCoordinates = [
+      { lat: 21.027922, lng: 105.778745 },
+      { lat: 21.207494, lng: 105.779278 },
+      { lat: 21.355608, lng: 105.607089 },
+      { lat: 21.545913, lng: 104.948039 },
+      { lat: 21.714354, lng: 104.833105 },
+      { lat: 22.474033, lng: 103.966245 },
+    ];
+    const MapWithAMarker = withScriptjs(
+      withGoogleMap((props) => (
+        <GoogleMap
+          defaultZoom={7}
+          defaultCenter={{ lat: 21.555263, lng: 104.929289 }}
+          options={{
+            gestureHandling: "greedy",
+            styles: [
+              {
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#212121",
+                  },
+                ],
+              },
+              {
+                elementType: "labels.icon",
+                stylers: [
+                  {
+                    visibility: "off",
+                  },
+                ],
+              },
+              {
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    //tên tỉnh
+                    color: "#2c2c2c",
+                  },
+                ],
+              },
+              {
+                elementType: "labels.text.stroke",
+                stylers: [
+                  {
+                    // viền tên
+                    color: "#999999",
+                  },
+                ],
+              },
+              {
+                featureType: "administrative",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#ffcc00",
+                  },
+                ],
+              },
+              {
+                featureType: "administrative.country",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#ffcc00",
+                  },
+                ],
+              },
+              {
+                featureType: "administrative.land_parcel",
+                stylers: [
+                  {
+                    visibility: "off",
+                  },
+                ],
+              },
+              {
+                featureType: "administrative.locality",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    //tên phường
+                    color: "#2c2c2c",
+                  },
+                ],
+              },
+              {
+                featureType: "poi",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#ffcc00",
+                  },
+                ],
+              },
+              {
+                featureType: "poi.park",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#181818",
+                  },
+                ],
+              },
+              {
+                featureType: "poi.park",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    //tên khu bảo tồn
+                    color: "#2c2c2c",
+                  },
+                ],
+              },
+              {
+                featureType: "poi.park",
+                elementType: "labels.text.stroke",
+                stylers: [
+                  {
+                    //viền khu bảo tồn
+                    color: "#ffcc00",
+                  },
+                ],
+              },
+              {
+                featureType: "road",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    color: "#2c2c2c",
+                  },
+                ],
+              },
+              {
+                featureType: "road",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    // tên đường chính
+                    color: "#2c2c2c",
+                  },
+                ],
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    // style đường
+                    color: "#ffcc00",
+                  },
+                ],
+              },
+              {
+                featureType: "road.highway",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#3c3c3c",
+                  },
+                ],
+              },
+              {
+                featureType: "road.highway.controlled_access",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#4e4e4e",
+                  },
+                ],
+              },
+              {
+                featureType: "road.local",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#616161",
+                  },
+                ],
+              },
+              {
+                featureType: "transit",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#757575",
+                  },
+                ],
+              },
+              {
+                featureType: "water",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000",
+                  },
+                ],
+              },
+              {
+                featureType: "water",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#3d3d3d",
+                  },
+                ],
+              },
+            ],
+          }}
+        >
+          <Marker
+            position={centerMap}
+            icon={{
+              url: topng,
+              scaledSize: new window.google.maps.Size(30, 30),
+            }}
+          />
+          <Polyline
+            path={pathCoordinates}
+            geodesic={true}
+            options={{
+              strokeColor: "#ffa100",
+              strokeOpacity: 0.75,
+              strokeWeight: 3,
+            }}
+          />
+          <Marker
+            position={centerMap1}
+            icon={{
+              url: topng,
+              scaledSize: new window.google.maps.Size(30, 30),
+            }}
+          />
+        </GoogleMap>
+      ))
+    );
+
     return (
       <div
         className={classNames({
           [className]: true,
         })}
       >
-        
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ flex: "1 1 0%", maxWidth: "1200px" }}>
             <h1
@@ -704,7 +936,18 @@ const List = memo(
                               borderWidth: "0px",
                               margin: "0px",
                             }}
-                          />
+                          >
+                            <MapWithAMarker
+                              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDmN132rIdAeZOwpBcicXnArLWTrhbR_Lk"
+                              loadingElement={
+                                <div style={{ height: `100%` }} />
+                              }
+                              containerElement={
+                                <div style={{ height: `100%` }} />
+                              }
+                              mapElement={<div style={{ height: `100%` }} />}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -55,6 +55,7 @@ const AuthorizedLayout = ({
         Globals.clear();
       } else {
         onBrowseGlobalConfig(resultEntry);
+        setProgress(100);
       }
     }
   }, [token]);
@@ -70,7 +71,7 @@ const AuthorizedLayout = ({
     >
       <LoadingBar color='#3f7aef' progress={progress} onLoaderFinished={() => setProgress(0)}/>
       <HeaderSidebar />
-      <Slider />
+      <Slider progress={progress} setProgress={setProgress} />
       <Layout className="site-layout">
         {/* <TopMenu
           toggle={toggle}
