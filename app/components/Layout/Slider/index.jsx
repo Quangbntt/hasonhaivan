@@ -11,7 +11,6 @@ import {
 import { Spin, Select } from "antd";
 import _ from "lodash";
 import moment from "moment";
-import { Grid, Paper, Card, CardHeader, CardContent } from "@material-ui/core";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import * as style from "components/Variables";

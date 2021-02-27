@@ -311,7 +311,6 @@ const List = memo(
                               ? _.map(treeInputPlace, (item, index) => {
                                   return (
                                     <TreeNode
-                                      // key={md5(item.id+index)}
                                       key={item.id + index}
                                       value={item.name}
                                       title={

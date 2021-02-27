@@ -1,7 +1,5 @@
 import React, { memo, useCallback, useState, useEffect } from "react";
 
-import Pie from "./PieSeries/index";
-import Bar from "./BarSeries/index";
 import { Table, Affix } from "antd";
 import classNames from "classnames";
 import styled from "styled-components";

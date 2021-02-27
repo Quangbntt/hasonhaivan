@@ -187,6 +187,7 @@ const HeaderSidebar = memo(({ className }) => {
         setVisible={setVisible}
         setRow={setRow}
         row={row}
+        forceRender={true}
         // data={data}
       />
       <div className="header">

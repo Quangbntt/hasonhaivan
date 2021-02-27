@@ -28,7 +28,7 @@ let time = null;
 const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
   const recaptchaRef = React.createRef();
   const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
-  const [form] = Form.useForm();
+  const [form] = Form.useForm({ forceFormElementConnection: false });
   const [objForm, setObjForm] = useState({});
   const [status, setStatus] = useState(true);
   const handleOk = () => {
@@ -104,7 +104,7 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
         phone: user.phone,
         status: user.status,
       };
-      form.setFieldsValue(obj);
+      // form.setFieldsValue(obj);
     }
   }, [visible]);
   useEffect(() => {
@@ -126,6 +126,7 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
         onCancel={handleCancel}
         width="28%"
         destroyOnClose
+        forceRender
         footer={[]}
       >
         <Form form={form} name="control-ref" onFinish={onFinish}>
