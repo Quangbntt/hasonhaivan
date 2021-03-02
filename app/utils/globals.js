@@ -22,6 +22,7 @@ export default class Globals {
   static clear() {
     $Cookies.remove(ERP_REPORT);
     $Cookies.remove(JWT_TOKEN);
+    $Cookies.remove("TOKEN");
     $LocalStorage.sls.clear();
     $LocalStorage.pls.clear();
     this.session = {

@@ -1,7 +1,7 @@
 export const RESTART_ON_REMOUNT = '@@saga-injector/restart-on-remount';
 export const DAEMON = '@@saga-injector/daemon';
 export const ONCE_TILL_UNMOUNT = '@@saga-injector/once-till-unmount';
-export const JWT_TOKEN = 'authorization_boc';
+export const JWT_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpd2ViLmhhc29uaGFpdmFuLmNvbVwvYXBpXC92ZXJpZnktb3RwIiwiaWF0IjoxNjE0NTg3MzU3LCJleHAiOjQ4MjcwNTg3MzU3LCJuYmYiOjE2MTQ1ODczNTcsImp0aSI6IjFzVmE1YVlhazllM3pNOGQiLCJzdWIiOjQyMDQyMiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.iVjbtKtU1b6fs60GO4bDRvlO3d7mmsDUQveA349-ViQ';
 export const ERP_REPORT = 'ERP_REPORT';
 export const APP_PARAM = 'APP_PARAM';
 export const DEFAULT_RESPONSE_MESSAGE = {

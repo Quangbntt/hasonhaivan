@@ -222,12 +222,11 @@ const List = memo(
       >
         <Row>
           <Col sm={24} xs={24} md={24} lg={24}>
-            <div style={{ position: "relative", height: "456px" }}>
+            <div style={{ position: "relative" }}>
               <div
                 style={{
                   possition: "absolute",
                   top: "0",
-                  height: "456px",
                   width: "100%",
                 }}
               >
@@ -242,7 +241,7 @@ const List = memo(
             </div>
           </Col>
         </Row>
-        <div style={{ position: "relative", top: "-63px", width: "100%" }}>
+        <div className="header_search">
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
@@ -263,35 +262,12 @@ const List = memo(
                       md={24}
                     >
                       <Row className="padding_input" gutter={16}>
-                        <Col sm={6} lg={6} xs={6} md={6}>
+                        <Col sm={6} lg={6} xs={24} md={6}>
                           <div
                             style={{ fontWeight: "bold", marginBottom: "8px" }}
                           >
                             Điểm xuất phát
                           </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          >
-                            Điểm đến
-                          </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          >
-                            Ngày đi
-                          </div>
-                        </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
-                          <div
-                            style={{ fontWeight: "bold", marginBottom: "8px" }}
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="padding_input" gutter={16}>
-                        <Col sm={6} lg={6} xs={6} md={6}>
                           <TreeSelect
                             // treeData={dataPlace}
                             showSearch
@@ -393,7 +369,12 @@ const List = memo(
                                 })}
                           </TreeSelect>
                         </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
+                        <Col sm={24} lg={6} xs={24} md={6}>
+                        <div
+                            style={{ fontWeight: "bold", marginBottom: "8px" }}
+                          >
+                            Điểm đến
+                          </div>
                           <AutoComplete
                             // options={inputPlace}
                             onSelect={onSelect}
@@ -410,7 +391,12 @@ const List = memo(
                             ))}
                           </AutoComplete>
                         </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
+                        <Col sm={24} lg={6} xs={24} md={6}>
+                        <div
+                            style={{ fontWeight: "bold", marginBottom: "8px" }}
+                          >
+                            Ngày đi
+                          </div>
                           <DatePicker
                             size="large"
                             value={day}
@@ -425,7 +411,10 @@ const List = memo(
                             }}
                           />
                         </Col>
-                        <Col sm={6} lg={6} xs={6} md={6}>
+                        <Col sm={24} lg={6} xs={24} md={6}>
+                          <div
+                            style={{ marginBottom: "30px" }}
+                          />
                           <div
                             className="d-flex justify-content-center align-items-center noselect"
                             style={{
@@ -433,6 +422,7 @@ const List = memo(
                               height: "56px",
                               backgroundColor: "#FFDD2B",
                               borderRadius: "4px",
+                              cursor: "pointer"
                             }}
                           >
                             <span style={{ fontSize: "24px" }}>Tìm vé</span>
@@ -518,5 +508,20 @@ export default styled(List)`
     }
     input#rc_select_0, input#rc_select_6 {
       height: 55px;
+    }
+    .header_search {
+      position: relative; 
+      top: -63px; 
+      width: 100%;
+    }
+    @media only screen and (max-width: 576px){
+      .slider{
+          height: 200px;
+      }
+      .header_search {
+        position: relative; 
+        top: 0px; 
+        width: 100%;
+      }
     }
   `;

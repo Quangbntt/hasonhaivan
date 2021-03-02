@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import PropTypes from "prop-types";
-import React, { memo, useState } from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { Breadcrumb } from "antd";
-import { Link } from "react-router-dom";
+import { Breadcrumb, Modal } from "antd";
+import { Link, useHistory } from "react-router-dom";
 import { defineMessages, FormattedMessage } from "react-intl";
 import * as style from "components/Variables";
 import classNames from "classnames";
@@ -11,14 +11,30 @@ import { DownOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button, Row, Col } from "antd";
 import icon_nine_dot from "images/icon_nine_dot.png";
 import logo from "images/logo.png";
-import ModalCreate from "./ModalLogin/index";
+import ModalVerify from "./ModalVerify";
+import ModalLogin from "./ModalLogin";
+import { $Cookies } from "utils/cookies";
+import Globals from "utils/globals";
 
 const prefix = "app.routing.";
-const HeaderSidebar = memo(({ className }) => {
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+let time = null;
+const HeaderSidebar = memo(({ className, onLogOut }) => {
+  const history = useHistory();
   const [visible, setVisible] = useState({
     isShow: false,
-    create: false,
   });
+  const [show, setShow] = useState({
+    isShow: false,
+    isLogin: false,
+  });
+  const [dataUser, setDataUser] = useState({});
+  const [params, setParams] = useState({
+    phone: undefined,
+    captcha: undefined,
+  });
+  const [checkOut, setCheckout] = useState(false);
   const [row, setRow] = useState({
     data: [],
     arrKey: [],
@@ -175,21 +191,76 @@ const HeaderSidebar = memo(({ className }) => {
       </Menu.Item>
     </Menu>
   );
+  const menuUser = (
+    <Menu>
+      <Menu.Item>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.antgroup.com"
+        >
+          Thông tin cá nhân
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.aliyun.com"
+        >
+          Chuyến đi của tôi
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" onClick={() => test()}>
+          Đăng xuất
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+  
+  const test = () => {
+    Globals.clear();
+    $Cookies.remove("TOKEN");
+    setCheckout(true);
+    // onLogOut();
+  };
+  useEffect(() => {
+    clearTimeout(time);
+    time = setTimeout(checkOut, 800);
+  }, [checkOut]);
+  
   return (
     <div
       className={classNames({
         [className]: true,
       })}
-      style={{height: "64px"}}
+      style={{ height: "64px" }}
     >
-      <ModalCreate
+      <ModalLogin
         visible={visible}
         setVisible={setVisible}
         setRow={setRow}
         row={row}
         forceRender={true}
+        show={show}
+        setShow={setShow}
+        params={params}
+        setParams={setParams}
         // data={data}
       />
+      {_.get(show, "isShow") && (
+        <ModalVerify
+          checkOut={checkOut}
+          setCheckout={setCheckout}
+          show={show}
+          setShow={setShow}
+          params={params}
+          setParams={setParams}
+          dataUser={dataUser}
+          setDataUser={setDataUser}
+        />
+      )}
       <div className="header">
         <Row
           className="row"
@@ -250,30 +321,58 @@ const HeaderSidebar = memo(({ className }) => {
               >
                 Hỗ trợ
               </a>
-              <div
-                style={{ paddingLeft: "4px", paddingRight: "4px", cursor: "pointer" }}
-                className="ant-col"
-                onClick={() => {
-                  setVisible((preState) => {
-                    let nextState = { ...preState };
-                    nextState.create = true;
-                    nextState.isShow = true;
-                    return nextState;
-                  });
-                }}
-              >
+              {$Cookies.get("TOKEN") != null ? (
                 <div
                   style={{
-                    color: "#333",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "2px solid #CC9800",
+                    paddingLeft: "4px",
+                    paddingRight: "4px",
+                    cursor: "pointer",
                   }}
-                  className="noselect"
+                  className="ant-col"
                 >
-                  Đăng nhập
+                  <Dropdown
+                    overlay={menuUser}
+                    trigger={["click"]}
+                    className="noselect"
+                    placement="bottomRight"
+                  >
+                    <a
+                      className="ant-dropdown-link"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Tài khoản <DownOutlined />
+                    </a>
+                  </Dropdown>
                 </div>
-              </div>
+              ) : (
+                <div
+                  style={{
+                    paddingLeft: "4px",
+                    paddingRight: "4px",
+                    cursor: "pointer",
+                  }}
+                  className="ant-col"
+                  onClick={() => {
+                    setVisible((preState) => {
+                      let nextState = { ...preState };
+                      nextState.isShow = true;
+                      return nextState;
+                    });
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "#333",
+                      padding: "8px",
+                      borderRadius: "4px",
+                      border: "2px solid #CC9800",
+                    }}
+                    className="noselect"
+                  >
+                    Đăng nhập
+                  </div>
+                </div>
+              )}
             </Row>
           </Col>
         </Row>
@@ -283,7 +382,7 @@ const HeaderSidebar = memo(({ className }) => {
 });
 
 HeaderSidebar.propTypes = {
-  className: PropTypes.any,
+  className: PropTypes.any.isRequired,
   pathName: PropTypes.any,
 };
 
@@ -316,5 +415,12 @@ export default memo(styled(HeaderSidebar)`
   }
   .ant-row.ant-row-end.ant-row-middle a {
     font-weight: 400;
+  }
+  a.ant-dropdown-trigger.ant-dropdown-link.noselect {
+    background: #ffdd2b !important;
+    color: rgb(51, 51, 51);
+    padding: 10px;
+    border-radius: 4px;
+    border: 2px solid rgb(204, 152, 0);
   }
 `);

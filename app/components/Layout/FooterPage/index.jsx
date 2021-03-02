@@ -23,7 +23,7 @@ const Footer = memo(({ className }) => {
     >
       <div style={{ zIndex: "1000" }}>
         <div style={{ width: "100%", backgroundColor: "#EDEEEE", display: "flex", justifyContent: "center", flexDirection: "row " }}>
-          <Row style={{ flex: "1", maxWidth: "1200px" }}>
+          <Row style={{ flex: "1", maxWidth: "1200px" }} className="response">
             <Col xs={6} sm={6} md={6} lg={6}>
               <Row justify="space-between" style={{ padding: "24px 0px" }}>
                 <Col>
@@ -140,5 +140,10 @@ export default memo(styled(Footer)`
     align-items: center; 
     justify-content: center; 
     height: 100%;
+  }
+  @media only screen and (max-width: 576px){
+    .response{
+        display: none;
+    }
   }
 `);

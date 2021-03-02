@@ -13,7 +13,7 @@ import {
 export default class ServiceBase {
   static async requestJson(opts) {
     const authorization1 = $Token.get(JWT_TOKEN);
-    const authorization = $Cookies.get(JWT_TOKEN);
+    const authorization = $Cookies.get("TOKEN");
     let axiosResult = null;
     let result = null;
     const axiosRequestConfig = {
@@ -122,7 +122,7 @@ export function requestJsonGet(options) {
       timeout: 100000,
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${$Token.get(JWT_TOKEN)}`,
+        authorization: `Bearer ${authorization}`,
       },
     });
     return xhr

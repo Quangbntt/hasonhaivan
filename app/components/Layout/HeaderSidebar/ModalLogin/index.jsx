@@ -21,23 +21,17 @@ import { Ui } from "utils/Ui";
 import ServiceBase from "utils/ServiceBase";
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
-const { Option } = Select;
-const { TextArea } = Input;
-const format = "HH:mm";
 let time = null;
-const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
+const ModalCreate = memo(({ visible, setVisible, setRow, row, className, show, setShow, params, setParams }) => {
   const recaptchaRef = React.createRef();
-  const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  const TEST_SITE_KEY = "6Lc1C90ZAAAAAIKVZHNXPhQxYWkUdP5-fnqCa0Vn";
+  //0387997547
+  //123456
   const [form] = Form.useForm();
   const [objForm, setObjForm] = useState({});
   const [status, setStatus] = useState(true);
-  const handleOk = () => {
-    setVisible((preState) => {
-      let nextState = { ...preState };
-      nextState.isShow = false;
-      return nextState;
-    });
-  };
+  const [captcha, setCaptcha] = useState({});
+  
   const handleCancel = () => {
     form.resetFields();
     setVisible((preState) => {
@@ -46,46 +40,28 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
       return nextState;
     });
   };
-  const create = _.get(visible, "create", false);
-  function onChange(value) {
-    console.log("Captcha value:", value);
-  }
-
   const onFinish = async (values) => {
-    let params = {
-      userName: values.userName,
-      password: values.password,
-      groupid: values.groupid,
-      name: values.name,
-      address: values.address,
-      email: values.email,
-      phone: values.phone,
-      status: status,
-    };
+    params.phone = values.name;
+    params.captcha = captcha;
     let url = "";
-    if (create) {
-      url = "/catruc/taomoi";
-    } else {
-      url = "/catruc/capnhat";
-    }
+    url = "https://apiweb.hasonhaivan.com/api/get-otp";
     let result = await ServiceBase.requestJson({
       url: url,
-      method: "POST",
+      method: "GET",
       data: params,
     });
     if (result.hasErrors) {
       Ui.showErrors(result.errors);
     } else {
-      let message = "";
-      if (create) {
-        message = "Tạo Mới Ca Thành Công";
-      } else {
-        message = "Sửa Mới Ca Thành Công";
-      }
-      Ui.showSuccess({ message: message });
       setVisible((preState) => {
         let nextState = { ...preState };
         nextState.isShow = false;
+        return nextState;
+      });
+      setShow((preState) => {
+        let nextState = { ...preState };
+        nextState.isShow = true;
+        nextState.isLogin = false;
         return nextState;
       });
     }
@@ -95,14 +71,7 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
     if (user) {
       setStatus(user.trangThai);
       let obj = {
-        username: user.username,
-        password: user.password,
-        groupid: user.groupid,
-        name: user.name,
-        address: user.address,
-        email: user.email,
-        phone: user.phone,
-        status: user.status,
+        phone: user.name,
       };
       form.setFieldsValue(obj);
     }
@@ -110,9 +79,6 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
   useEffect(() => {
     setTimeout(bowload, 0);
   }, [bowload]);
-  const onStatus = (values) => {
-    setStatus(values);
-  };
   return (
     <div
       gutter={15}
@@ -141,16 +107,25 @@ const ModalCreate = memo(({ visible, setVisible, setRow, row, className }) => {
                 style={{ height: "55px" }}
                 rules={[{ required: true, message: "Vui lòng nhập dữ liệu" }]}
               >
-                <InputNumber style={{ height: "55px" }} />
+                <Input
+                  style={{ height: "55px" }}
+                  type="number"
+                />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item>
-          <ReCAPTCHA
-            style={{ display: "inline-block" }}
-            theme="light"
-            sitekey={TEST_SITE_KEY}
-          />
+            <ReCAPTCHA
+              style={{ display: "inline-block" }}
+              theme="light"
+              sitekey={TEST_SITE_KEY}
+              size="normal"
+              render="explicit"
+              onChange={(value) => {
+                setCaptcha(value);
+              }}
+            />
+            
             <Button
               type="primary"
               htmlType="submit"
@@ -184,4 +159,5 @@ export default styled(ModalCreate)`
   .ant-form-item-control-input-content:hover button.ant-btn {
     background-color: rgb(255, 221, 43);
   }
+  
 `;

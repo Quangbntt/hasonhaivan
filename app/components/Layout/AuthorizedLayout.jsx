@@ -70,7 +70,7 @@ const AuthorizedLayout = ({
       })}
     >
       <LoadingBar color='#3f7aef' progress={progress} onLoaderFinished={() => setProgress(0)}/>
-      <HeaderSidebar />
+      <HeaderSidebar onLogOut={onLogOut} />
       <Slider progress={progress} setProgress={setProgress} />
       <Layout className="site-layout">
         {/* <TopMenu
