@@ -9,20 +9,17 @@ import classNames from "classnames";
 import { Ui } from "utils/Ui";
 import ServiceBase from "utils/ServiceBase";
 import Pagination from "components/Paginate/index";
+import LoadingBar from 'react-top-loading-bar';
 
 import List from "./List";
+import Slider from "../Slider/index";
 import Axios from "axios";
 
 let time = null;
 
 const Home = memo(({}) => {
   const [loading, setLoading] = useState(false);
-  const [row, setRow] = useState({
-    data: [],
-    arrKey: [],
-    arrKeyOld: [],
-    dataOld: [],
-  });
+  const [progress, setProgress] = useState(0);
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
   const [dataPlace, setDataPlace] = useState([]);
@@ -55,6 +52,8 @@ const Home = memo(({}) => {
   }, [boweloadData]);
   return (
     <>
+      <LoadingBar color='#3f7aef' progress={progress} onLoaderFinished={() => setProgress(0)}/>
+      <Slider progress={progress} setProgress={setProgress} />
       <List
         loading={loading}
         setLoading={setLoading}

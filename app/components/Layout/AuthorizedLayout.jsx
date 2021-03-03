@@ -17,14 +17,12 @@ import TopMenu from "./TopMenu";
 import HeaderSidebar from "./HeaderSidebar";
 import FooterPage from "./FooterPage";
 import SubTopMenu from "./SubTopMenu";
-import Slider from "./Slider";
 import SideBar from "./SideBar";
 import classNames from "classnames";
 import { Table } from "antd";
 import { $Cookies } from "utils/cookies";
 import { JWT_TOKEN } from "utils/constants";
 import Globals from "utils/globals";
-import LoadingBar from 'react-top-loading-bar';
 
 const { Header, Footer, Content, Sider } = Layout;
 const AuthorizedLayout = ({
@@ -37,7 +35,6 @@ const AuthorizedLayout = ({
   onLogOut,
   appConfig,
 }) => {
-  const [progress, setProgress] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -69,9 +66,7 @@ const AuthorizedLayout = ({
         [className]: true,
       })}
     >
-      <LoadingBar color='#3f7aef' progress={progress} onLoaderFinished={() => setProgress(0)}/>
       <HeaderSidebar onLogOut={onLogOut} />
-      <Slider progress={progress} setProgress={setProgress} />
       <Layout className="site-layout">
         {/* <TopMenu
           toggle={toggle}

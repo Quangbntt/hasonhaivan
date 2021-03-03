@@ -195,16 +195,16 @@ const HeaderSidebar = memo(({ className, onLogOut }) => {
     <Menu>
       <Menu.Item>
         <a
-          target="_blank"
+          target="_self"
           rel="noopener noreferrer"
-          href="https://www.antgroup.com"
+          href="/tai-khoan/thong-tin-ca-nhan"
         >
           Thông tin cá nhân
         </a>
       </Menu.Item>
       <Menu.Item>
         <a
-          target="_blank"
+          target="_self"
           rel="noopener noreferrer"
           href="https://www.aliyun.com"
         >
@@ -212,7 +212,7 @@ const HeaderSidebar = memo(({ className, onLogOut }) => {
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" onClick={() => test()}>
+        <a target="_self" rel="noopener noreferrer" onClick={() => test()}>
           Đăng xuất
         </a>
       </Menu.Item>

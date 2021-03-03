@@ -25,14 +25,13 @@ let time = null;
 
 const Home = memo(({progress, setProgress}) => {
   const [loading, setLoading] = useState(false);
-  const [row, setRow] = useState({
-    data: [],
-    arrKey: [],
-    arrKeyOld: [],
-    dataOld: [],
-  });
   const [totalLength, setTotalLength] = useState(0);
   const [data, setData] = useState([]);
+  const [searchData, setSearchData] = useState({
+    start: undefined,
+    end: undefined,
+    date: moment().format("DD-MM-YYYY")
+  });
   const [dataPlace, setDataPlace] = useState([]);
   const [params, setParams] = useState({
     input: "",
@@ -56,6 +55,8 @@ const Home = memo(({progress, setProgress}) => {
   return (
     <>
       <List
+        searchData={searchData}
+        setSearchData={setSearchData}
         loading={loading}
         setLoading={setLoading}
         params={params}

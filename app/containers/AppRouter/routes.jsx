@@ -7,6 +7,7 @@ import Dashboard from "containers/Dashboard/Loadable";
 import Home from "containers/Home/Loadable";
 import TripRoute from "containers/TripRoute/Loadable";
 import Map from "containers/Map/Loadable";
+import MyAccount from "containers/MyAccount/Loadable";
 
 import Profile from "containers/Profile/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
@@ -49,6 +50,11 @@ export const authorizedRoutes = [
     path: "/",
     exact: true,
     component: Home,
+  },
+  {
+    path: "/tai-khoan/thong-tin-ca-nhan",
+    exact: true,
+    component: MyAccount,
   },
   {
     path: "/map",
